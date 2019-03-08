@@ -28,6 +28,10 @@ import java.util.UUID;
  *
  * @since 1.0
  */
+
+/**
+ * UUID
+ */
 public class JavaUuidSessionIdGenerator implements SessionIdGenerator {
 
     /**

@@ -34,6 +34,10 @@ import org.apache.shiro.session.SessionException;
  *
  * @since 1.2
  */
+
+/**
+ * 禁用session异常
+ */
 public class DisabledSessionException extends SessionException {
 
     public DisabledSessionException(String message) {

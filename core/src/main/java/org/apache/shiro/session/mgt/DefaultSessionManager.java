@@ -44,12 +44,16 @@ public class DefaultSessionManager extends AbstractValidatingSessionManager impl
 
     private static final Logger log = LoggerFactory.getLogger(DefaultSessionManager.class);
 
+    // session工程
     private SessionFactory sessionFactory;
 
+    // session dao
     protected SessionDAO sessionDAO;  //todo - move SessionDAO up to AbstractValidatingSessionManager?
 
+    // 缓存管理器
     private CacheManager cacheManager;
 
+    // 是否删除不可用的session
     private boolean deleteInvalidSessions;
 
     public DefaultSessionManager() {
@@ -151,10 +155,12 @@ public class DefaultSessionManager extends AbstractValidatingSessionManager impl
     }
 
     protected Session doCreateSession(SessionContext context) {
+        // 生成 session
         Session s = newSessionInstance(context);
         if (log.isTraceEnabled()) {
             log.trace("Creating session for host {}", s.getHost());
         }
+        // 生成sessionId 存储session
         create(s);
         return s;
     }
@@ -174,6 +180,7 @@ public class DefaultSessionManager extends AbstractValidatingSessionManager impl
         if (log.isDebugEnabled()) {
             log.debug("Creating new EIS record for new session instance [" + session + "]");
         }
+        // 生成sessionId 存储session
         sessionDAO.create(session);
     }
 
@@ -187,6 +194,10 @@ public class DefaultSessionManager extends AbstractValidatingSessionManager impl
         onChange(session);
     }
 
+    /**
+     * session stop
+     * @param session
+     */
     @Override
     protected void afterStopped(Session session) {
         if (isDeleteInvalidSessions()) {
@@ -194,6 +205,10 @@ public class DefaultSessionManager extends AbstractValidatingSessionManager impl
         }
     }
 
+    /**
+     * session过期
+     * @param session
+     */
     protected void onExpiration(Session session) {
         if (session instanceof SimpleSession) {
             ((SimpleSession) session).setExpired(true);
@@ -204,21 +219,31 @@ public class DefaultSessionManager extends AbstractValidatingSessionManager impl
     @Override
     protected void afterExpired(Session session) {
         if (isDeleteInvalidSessions()) {
+            // 删除session
             delete(session);
         }
     }
 
     protected void onChange(Session session) {
+        // 更新session
         sessionDAO.update(session);
     }
 
+    /**
+     * 索引session
+     * @param sessionKey
+     * @return
+     * @throws UnknownSessionException
+     */
     protected Session retrieveSession(SessionKey sessionKey) throws UnknownSessionException {
+        // 根据指定的sessionkey或者sessionid
         Serializable sessionId = getSessionId(sessionKey);
         if (sessionId == null) {
             log.debug("Unable to resolve session ID from SessionKey [{}].  Returning null to indicate a " +
                     "session could not be found.", sessionKey);
             return null;
         }
+        // 从存储设备中获取session
         Session s = retrieveSessionFromDataSource(sessionId);
         if (s == null) {
             //session ID was provided, meaning one is expected to be found, but we couldn't find one:
@@ -232,14 +257,23 @@ public class DefaultSessionManager extends AbstractValidatingSessionManager impl
         return sessionKey.getSessionId();
     }
 
+    // 从存储系统中获取session
     protected Session retrieveSessionFromDataSource(Serializable sessionId) throws UnknownSessionException {
         return sessionDAO.readSession(sessionId);
     }
 
+    /**
+     * 删除session
+     * @param session
+     */
     protected void delete(Session session) {
         sessionDAO.delete(session);
     }
 
+    /**
+     * 获取激活的session集合
+     * @return
+     */
     protected Collection<Session> getActiveSessions() {
         Collection<Session> active = sessionDAO.getActiveSessions();
         return active != null ? active : Collections.<Session>emptySet();

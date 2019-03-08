@@ -29,6 +29,10 @@ import org.apache.shiro.session.Session;
  *
  * @since 1.0
  */
+
+/**
+ * session工厂接口
+ */
 public interface SessionFactory {
 
     /**
@@ -37,6 +41,11 @@ public interface SessionFactory {
      * @param initData the initialization data to be used during {@link Session} creation.
      * @return a new {@code Session} instance.
      * @since 1.0
+     */
+    /**
+     * 根据sessionContext创建session
+     * @param initData
+     * @return
      */
     Session createSession(SessionContext initData);
 }

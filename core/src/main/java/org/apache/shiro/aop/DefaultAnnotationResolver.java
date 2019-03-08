@@ -38,6 +38,10 @@ import java.lang.reflect.Method;
  *
  * @since 1.1
  */
+
+/**
+ * 默认注解解析器实现类
+ */
 public class DefaultAnnotationResolver implements AnnotationResolver {
 
     /**

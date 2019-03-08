@@ -262,6 +262,7 @@ public class SimpleSession implements ValidatingSession, Serializable {
 
     public void validate() throws InvalidSessionException {
         //check for stopped:
+        // 是否stop
         if (isStopped()) {
             //timestamp is set, so the session is considered stopped:
             String msg = "Session with id [" + getId() + "] has been " +
@@ -271,6 +272,7 @@ public class SimpleSession implements ValidatingSession, Serializable {
         }
 
         //check for expiration
+        // 是否超时
         if (isTimedOut()) {
             expire();
 

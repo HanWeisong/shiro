@@ -37,6 +37,10 @@ import java.util.List;
  * @see SingleArgumentMethodEventListener
  * @since 1.3
  */
+
+/**
+ * 注解事件监听解析器
+ */
 public class AnnotationEventListenerResolver implements EventListenerResolver {
 
     private Class<? extends Annotation> annotationClass;
@@ -53,11 +57,17 @@ public class AnnotationEventListenerResolver implements EventListenerResolver {
      * @return a new collection of {@link EventListener} instances, each instance corresponding to an annotated
      *         method discovered on the specified {@code instance} argument.
      */
+    /**
+     * 获取instance实例的含监听器列表
+     * @param instance
+     * @return
+     */
     public List<EventListener> getEventListeners(Object instance) {
         if (instance == null) {
             return Collections.emptyList();
         }
 
+        // 获取instance类含有指定类型注解的method
         List<Method> methods = ClassUtils.getAnnotatedMethods(instance.getClass(), getAnnotationClass());
         if (methods == null || methods.isEmpty()) {
             return Collections.emptyList();

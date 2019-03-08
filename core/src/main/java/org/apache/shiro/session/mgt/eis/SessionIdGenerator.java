@@ -38,6 +38,10 @@ import java.io.Serializable;
  * @see org.apache.shiro.session.mgt.eis.RandomSessionIdGenerator RandomSessionIdGenerator
  * @since 1.0
  */
+
+/**
+ * sessionId生成器
+ */
 public interface SessionIdGenerator {
 
     /**

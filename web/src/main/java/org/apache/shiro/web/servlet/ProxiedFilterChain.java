@@ -33,6 +33,10 @@ import java.util.List;
  *
  * @since 0.9
  */
+
+/**
+ * 代理过滤连
+ */
 public class ProxiedFilterChain implements FilterChain {
 
     //TODO - complete JavaDoc

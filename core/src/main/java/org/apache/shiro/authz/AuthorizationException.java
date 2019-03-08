@@ -26,6 +26,10 @@ import org.apache.shiro.ShiroException;
  *
  * @since 0.1
  */
+
+/**
+ * 授权异常
+ */
 public class AuthorizationException extends ShiroException
 {
 

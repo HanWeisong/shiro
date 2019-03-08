@@ -56,6 +56,10 @@ package org.apache.shiro.event;
  *
  * @since 1.3
  */
+
+/**
+ * 事件bus
+ */
 public interface EventBus {
 
     /**

@@ -24,6 +24,10 @@ package org.apache.shiro.dao;
  *
  * @since 1.2
  */
+
+/**
+ * 资源使用情况无效
+ */
 public class InvalidResourceUsageException extends DataAccessException {
 
     /**

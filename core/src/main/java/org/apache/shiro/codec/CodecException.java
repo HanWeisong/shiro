@@ -26,6 +26,10 @@ import org.apache.shiro.ShiroException;
  *
  * @since 0.9
  */
+
+/**
+ * 编解码异常
+ */
 public class CodecException extends ShiroException
 {
 

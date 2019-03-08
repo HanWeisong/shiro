@@ -28,95 +28,41 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Superclass for authorization-related filters.  If an request is unauthorized, response handling is delegated to the
- * {@link #onAccessDenied(javax.servlet.ServletRequest, javax.servlet.ServletResponse) onAccessDenied} method, which
- * provides reasonable handling for most applications.
- *
- * @see #onAccessDenied(javax.servlet.ServletRequest, javax.servlet.ServletResponse)
- * @since 0.9
- */
+// 授权过滤器
 public abstract class AuthorizationFilter extends AccessControlFilter {
 
-    /**
-     * The URL to which users should be redirected if they are denied access to an underlying path or resource,
-     * {@code null} by default which will issue a raw {@link HttpServletResponse#SC_UNAUTHORIZED} response
-     * (401 Unauthorized).
-     */
+    // 提示未被授权的页面地址
     private String unauthorizedUrl;
 
-    /**
-     * Returns the URL to which users should be redirected if they are denied access to an underlying path or resource,
-     * or {@code null} if a raw {@link HttpServletResponse#SC_UNAUTHORIZED} response should be issued (401 Unauthorized).
-     * <p/>
-     * The default is {@code null}, ensuring default web server behavior.  Override this default by calling the
-     * {@link #setUnauthorizedUrl(String) setUnauthorizedUrl} method with a meaningful path within your application
-     * if you would like to show the user a 'nice' page in the event of unauthorized access.
-     *
-     * @return the URL to which users should be redirected if they are denied access to an underlying path or resource,
-     *         or {@code null} if a raw {@link HttpServletResponse#SC_UNAUTHORIZED} response should be issued (401 Unauthorized).
-     */
     public String getUnauthorizedUrl() {
         return unauthorizedUrl;
     }
 
-    /**
-     * Sets the URL to which users should be redirected if they are denied access to an underlying path or resource.
-     * <p/>
-     * If the value is {@code null} a raw {@link HttpServletResponse#SC_UNAUTHORIZED} response will
-     * be issued (401 Unauthorized), retaining default web server behavior.
-     * <p/>
-     * Unless overridden by calling this method, the default value is {@code null}.  If desired, you can specify a
-     * meaningful path within your application if you would like to show the user a 'nice' page in the event of
-     * unauthorized access.
-     *
-     * @param unauthorizedUrl the URL to which users should be redirected if they are denied access to an underlying
-     *                        path or resource, or {@code null} to a ensure raw {@link HttpServletResponse#SC_UNAUTHORIZED} response is
-     *                        issued (401 Unauthorized).
-     */
     public void setUnauthorizedUrl(String unauthorizedUrl) {
         this.unauthorizedUrl = unauthorizedUrl;
     }
 
-    /**
-     * Handles the response when access has been denied.  It behaves as follows:
-     * <ul>
-     * <li>If the {@code Subject} is unknown<sup><a href="#known">[1]</a></sup>:
-     * <ol><li>The incoming request will be saved and they will be redirected to the login page for authentication
-     * (via the {@link #saveRequestAndRedirectToLogin(javax.servlet.ServletRequest, javax.servlet.ServletResponse)}
-     * method).</li>
-     * <li>Once successfully authenticated, they will be redirected back to the originally attempted page.</li></ol>
-     * </li>
-     * <li>If the Subject is known:</li>
-     * <ol>
-     * <li>The HTTP {@link HttpServletResponse#SC_UNAUTHORIZED} header will be set (401 Unauthorized)</li>
-     * <li>If the {@link #getUnauthorizedUrl() unauthorizedUrl} has been configured, a redirect will be issued to that
-     * URL.  Otherwise the 401 response is rendered normally</li>
-     * </ul>
-     * <code><a name="known">[1]</a></code>: A {@code Subject} is 'known' when
-     * <code>subject.{@link org.apache.shiro.subject.Subject#getPrincipal() getPrincipal()}</code> is not {@code null},
-     * which implicitly means that the subject is either currently authenticated or they have been remembered via
-     * 'remember me' services.
-     *
-     * @param request  the incoming <code>ServletRequest</code>
-     * @param response the outgoing <code>ServletResponse</code>
-     * @return {@code false} always for this implementation.
-     * @throws IOException if there is any servlet error.
-     */
+    // 处理被拦截住的请求 1.未认证 2.未授权
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
 
+        // 获取请求的主体信息
         Subject subject = getSubject(request, response);
-        // If the subject isn't identified, redirect to login URL
+        // 如果没有认证
         if (subject.getPrincipal() == null) {
+            // 1.保存当前请求（请求方法、地址、参数）到 session 信息
+            // 2.重定向到登录地址
             saveRequestAndRedirectToLogin(request, response);
         } else {
             // If subject is known but not authorized, redirect to the unauthorized URL if there is one
             // If no unauthorized URL is specified, just return an unauthorized HTTP status code
+            // 如果已认证，但是未授权则重定向到为授权页面
             String unauthorizedUrl = getUnauthorizedUrl();
             //SHIRO-142 - ensure that redirect _or_ error code occurs - both cannot happen due to response commit:
             if (StringUtils.hasText(unauthorizedUrl)) {
+                // 未授权地址已配置 重定向到未授权地址提示页面
                 WebUtils.issueRedirect(request, response, unauthorizedUrl);
             } else {
+                // 未授权地址未配置 返回401响应
                 WebUtils.toHttp(response).sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }
         }

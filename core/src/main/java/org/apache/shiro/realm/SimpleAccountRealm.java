@@ -28,7 +28,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -152,13 +151,16 @@ public class SimpleAccountRealm extends AuthorizingRealm {
 
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+        // 获取account信息
         SimpleAccount account = getUser(upToken.getUsername());
 
         if (account != null) {
 
+            // 判断account是否锁定
             if (account.isLocked()) {
                 throw new LockedAccountException("Account [" + account + "] is locked.");
             }
+            // 判断account证书是否过期
             if (account.isCredentialsExpired()) {
                 String msg = "The credentials for account [" + account + "] are expired";
                 throw new ExpiredCredentialsException(msg);

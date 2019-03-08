@@ -26,6 +26,10 @@ import java.lang.reflect.Modifier;
  *
  * @since 1.3
  */
+
+/**
+ * 单参数方法事件监听器
+ */
 public class SingleArgumentMethodEventListener implements TypedEventListener {
 
     private final Object target;
@@ -35,8 +39,9 @@ public class SingleArgumentMethodEventListener implements TypedEventListener {
         this.target = target;
         this.method = method;
         //assert that the method is defined as expected:
+        // 校验方法参数是否单参数
         getMethodArgumentType(method);
-
+        // 校验方法修饰符是否public
         assertPublicMethod(method);
     }
 
@@ -48,6 +53,10 @@ public class SingleArgumentMethodEventListener implements TypedEventListener {
         return this.method;
     }
 
+    /**
+     * 校验方法修饰符是否public
+     * @param method
+     */
     private void assertPublicMethod(Method method) {
         int modifiers = method.getModifiers();
         if (!Modifier.isPublic(modifiers)) {
@@ -55,10 +64,20 @@ public class SingleArgumentMethodEventListener implements TypedEventListener {
         }
     }
 
+    /**
+     * 判断是否接受event
+     * @param event the event object to test
+     * @return
+     */
     public boolean accepts(Object event) {
+        // 判断event是否是方法参数类型的实例
         return event != null && getEventType().isInstance(event);
     }
 
+    /**
+     * 获得事件类型（方法参数类型）
+     * @return
+     */
     public Class getEventType() {
         return getMethodArgumentType(getMethod());
     }
@@ -72,6 +91,11 @@ public class SingleArgumentMethodEventListener implements TypedEventListener {
         }
     }
 
+    /**
+     * 获得方法参数类型，多参数抛出异常
+     * @param method
+     * @return
+     */
     protected Class getMethodArgumentType(Method method) {
         Class[] paramTypes = method.getParameterTypes();
         if (paramTypes.length != 1) {

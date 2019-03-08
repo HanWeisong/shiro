@@ -35,6 +35,10 @@ import org.apache.shiro.subject.Subject;
  * @see DefaultSubjectDAO
  * @since 1.2
  */
+
+/**
+ * subject DAO 接口
+ */
 public interface SubjectDAO {
 
     /**

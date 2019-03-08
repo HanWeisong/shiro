@@ -37,6 +37,10 @@ package org.apache.shiro.event.support;
  *
  * @since 1.3
  */
+
+/**
+ * 事件监听器接口
+ */
 public interface EventListener {
 
     /**

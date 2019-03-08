@@ -25,6 +25,10 @@ package org.apache.shiro.authz;
  *
  * @since 0.1
  */
+
+/**
+ * 主机未授权异常类
+ */
 public class HostUnauthorizedException extends UnauthorizedException {
 
     private String host;

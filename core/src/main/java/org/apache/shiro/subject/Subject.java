@@ -58,6 +58,10 @@ import java.util.concurrent.Callable;
  *
  * @since 0.1
  */
+
+/**
+ * 主题接口
+ */
 public interface Subject {
 
     /**

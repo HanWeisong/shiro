@@ -34,6 +34,9 @@ public abstract class MethodInterceptorSupport implements MethodInterceptor {
     /**
      * Default no-argument constructor for subclasses.
      */
+    /**
+     * 默认无参构造方法
+     */
     public MethodInterceptorSupport() {
     }
 
@@ -43,6 +46,10 @@ public abstract class MethodInterceptorSupport implements MethodInterceptor {
      * This default implementation merely calls <code>{@link org.apache.shiro.SecurityUtils#getSubject SecurityUtils.getSubject()}</code>.
      *
      * @return the {@link org.apache.shiro.subject.Subject Subject} associated with the currently-executing code.
+     */
+    /**
+     * 通过安全工具类获取当前线程的主题对象
+     * @return
      */
     protected Subject getSubject() {
         return SecurityUtils.getSubject();

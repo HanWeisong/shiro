@@ -222,6 +222,7 @@ public class DefaultWebSecurityManager extends DefaultSecurityManager implements
         return sessionContext;
     }
 
+    // 根据 SessionId 获取 SessionKey
     @Override
     protected SessionKey getSessionKey(SubjectContext context) {
         if (WebUtils.isWeb(context)) {
@@ -235,12 +236,14 @@ public class DefaultWebSecurityManager extends DefaultSecurityManager implements
         }
     }
 
+    // 退出之前操作 1.rememberMeLogout 2.removeRequestIdentity
     @Override
     protected void beforeLogout(Subject subject) {
         super.beforeLogout(subject);
         removeRequestIdentity(subject);
     }
 
+    // requset _IDENTITY_REMOVED_KEY true
     protected void removeRequestIdentity(Subject subject) {
         if (subject instanceof WebSubject) {
             WebSubject webSubject = (WebSubject) subject;

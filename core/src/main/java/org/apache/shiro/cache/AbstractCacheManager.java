@@ -33,15 +33,25 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @since 1.0
  */
+
+/**
+ * 抽象的缓存管理器实现
+ */
 public abstract class AbstractCacheManager implements CacheManager, Destroyable {
 
     /**
      * Retains all Cache objects maintained by this cache manager.
      */
+    /**
+     * 保留此缓存管理器维护的所有Cache对象
+     */
     private final ConcurrentMap<String, Cache> caches;
 
     /**
      * Default no-arg constructor that instantiates an internal name-to-cache {@code ConcurrentMap}.
+     */
+    /**
+     * 默认构造方法
      */
     public AbstractCacheManager() {
         this.caches = new ConcurrentHashMap<String, Cache>();
@@ -55,6 +65,13 @@ public abstract class AbstractCacheManager implements CacheManager, Destroyable 
      * @return the cache with the specified {@code name}.
      * @throws IllegalArgumentException if the {@code name} argument is {@code null} or does not contain text.
      * @throws CacheException           if there is a problem lazily creating a {@code Cache} instance.
+     */
+    /**
+     * 根据name获取缓存
+     * @param name
+     * @return
+     * @throws IllegalArgumentException
+     * @throws CacheException
      */
     public <K, V> Cache<K, V> getCache(String name) throws IllegalArgumentException, CacheException {
         if (!StringUtils.hasText(name)) {
@@ -83,6 +100,12 @@ public abstract class AbstractCacheManager implements CacheManager, Destroyable 
      * @return a new {@code Cache} instance associated with the specified {@code name}.
      * @throws CacheException if the {@code Cache} instance cannot be created.
      */
+    /**
+     * 创建缓存
+     * @param name
+     * @return
+     * @throws CacheException
+     */
     protected abstract Cache createCache(String name) throws CacheException;
 
     /**
@@ -90,6 +113,10 @@ public abstract class AbstractCacheManager implements CacheManager, Destroyable 
      * {@link java.util.Map#clear clears} out the internally referenced cache map.
      *
      * @throws Exception if any of the managed caches can't destroy properly.
+     */
+    /**
+     * 缓存销毁，清空MAP
+     * @throws Exception
      */
     public void destroy() throws Exception {
         while (!caches.isEmpty()) {

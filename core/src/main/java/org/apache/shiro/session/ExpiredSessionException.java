@@ -25,6 +25,10 @@ package org.apache.shiro.session;
  *
  * @since 0.1
  */
+
+/**
+ * 过期的session异常类
+ */
 public class ExpiredSessionException extends StoppedSessionException {
 
     /**

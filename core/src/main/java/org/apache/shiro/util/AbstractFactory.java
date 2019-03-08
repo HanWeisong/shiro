@@ -23,6 +23,11 @@ package org.apache.shiro.util;
  *
  * @since 1.0
  */
+
+/**
+ * 工程接口的抽象实现，提供单例和非单例实现
+ * @param <T>
+ */
 public abstract class AbstractFactory<T> implements Factory<T> {
 
     private boolean singleton;

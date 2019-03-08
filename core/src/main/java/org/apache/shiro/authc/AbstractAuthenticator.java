@@ -148,6 +148,10 @@ public abstract class AbstractAuthenticator implements Authenticator, LogoutAwar
      *
      * @param principals the identifying principals of the {@code Subject}/account logging out.
      */
+    /**
+     * 遍历所有监听器，通知登出消息
+     * @param principals
+     */
     protected void notifyLogout(PrincipalCollection principals) {
         for (AuthenticationListener listener : this.listeners) {
             listener.onLogout(principals);
@@ -161,7 +165,12 @@ public abstract class AbstractAuthenticator implements Authenticator, LogoutAwar
      *
      * @param principals the identifying principals of the {@code Subject}/account logging out.
      */
+    /**
+     * 登出
+     * @param principals the identifying principals of the Subject logging out.
+     */
     public void onLogout(PrincipalCollection principals) {
+        // 通知登出消息
         notifyLogout(principals);
     }
 
@@ -195,7 +204,9 @@ public abstract class AbstractAuthenticator implements Authenticator, LogoutAwar
 
         AuthenticationInfo info;
         try {
+            // 执行认证token流程
             info = doAuthenticate(token);
+            // 认证信息为null 抛出异常
             if (info == null) {
                 String msg = "No account information found for authentication token [" + token + "] by this " +
                         "Authenticator instance.  Please check that it is configured correctly.";
@@ -216,6 +227,7 @@ public abstract class AbstractAuthenticator implements Authenticator, LogoutAwar
                     log.warn(msg, t);
             }
             try {
+                // 通知认证失败
                 notifyFailure(token, ae);
             } catch (Throwable t2) {
                 if (log.isWarnEnabled()) {
@@ -232,6 +244,7 @@ public abstract class AbstractAuthenticator implements Authenticator, LogoutAwar
 
         log.debug("Authentication successful for token [{}].  Returned account [{}]", token, info);
 
+        // 通知认证成功
         notifySuccess(token, info);
 
         return info;

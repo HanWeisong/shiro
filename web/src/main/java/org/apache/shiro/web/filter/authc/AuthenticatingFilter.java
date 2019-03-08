@@ -30,18 +30,14 @@ import javax.servlet.ServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
-/**
- * An <code>AuthenticationFilter</code> that is capable of automatically performing an authentication attempt
- * based on the incoming request.
- *
- * @since 0.9
- */
 public abstract class AuthenticatingFilter extends AuthenticationFilter {
     public static final String PERMISSIVE = "permissive";
 
     //TODO - complete JavaDoc
 
+    // 执行登录认证流程，返回认证结果
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
+        // 创建token
         AuthenticationToken token = createToken(request, response);
         if (token == null) {
             String msg = "createToken method implementation returned null. A valid non-null AuthenticationToken " +
@@ -49,8 +45,11 @@ public abstract class AuthenticatingFilter extends AuthenticationFilter {
             throw new IllegalStateException(msg);
         }
         try {
+            // 获取subject信息
             Subject subject = getSubject(request, response);
+            // 登录
             subject.login(token);
+
             return onLoginSuccess(token, subject, request, response);
         } catch (AuthenticationException e) {
             return onLoginFailure(token, e, request, response);
@@ -61,6 +60,7 @@ public abstract class AuthenticatingFilter extends AuthenticationFilter {
 
     protected AuthenticationToken createToken(String username, String password,
                                               ServletRequest request, ServletResponse response) {
+        // 是否记住我
         boolean rememberMe = isRememberMe(request);
         String host = getHost(request);
         return createToken(username, password, rememberMe, host);
@@ -81,54 +81,20 @@ public abstract class AuthenticatingFilter extends AuthenticationFilter {
         return false;
     }
 
-    /**
-     * Returns the host name or IP associated with the current subject.  This method is primarily provided for use
-     * during construction of an <code>AuthenticationToken</code>.
-     * <p/>
-     * The default implementation merely returns {@link ServletRequest#getRemoteHost()}.
-     *
-     * @param request the incoming ServletRequest
-     * @return the <code>InetAddress</code> to associate with the login attempt.
-     */
     protected String getHost(ServletRequest request) {
         return request.getRemoteHost();
     }
 
-    /**
-     * Returns <code>true</code> if &quot;rememberMe&quot; should be enabled for the login attempt associated with the
-     * current <code>request</code>, <code>false</code> otherwise.
-     * <p/>
-     * This implementation always returns <code>false</code> and is provided as a template hook to subclasses that
-     * support <code>rememberMe</code> logins and wish to determine <code>rememberMe</code> in a custom mannner
-     * based on the current <code>request</code>.
-     *
-     * @param request the incoming ServletRequest
-     * @return <code>true</code> if &quot;rememberMe&quot; should be enabled for the login attempt associated with the
-     *         current <code>request</code>, <code>false</code> otherwise.
-     */
     protected boolean isRememberMe(ServletRequest request) {
         return false;
     }
 
-    /**
-     * Determines whether the current subject should be allowed to make the current request.
-     * <p/>
-     * The default implementation returns <code>true</code> if the user is authenticated.  Will also return
-     * <code>true</code> if the {@link #isLoginRequest} returns false and the &quot;permissive&quot; flag is set.
-     *
-     * @return <code>true</code> if request should be allowed access
-     */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        return super.isAccessAllowed(request, response, mappedValue) ||
-                (!isLoginRequest(request, response) && isPermissive(mappedValue));
+        return super.isAccessAllowed(request, response, mappedValue) || (!isLoginRequest(request, response) && isPermissive(mappedValue));
     }
 
-    /**
-     * Returns <code>true</code> if the mappedValue contains the {@link #PERMISSIVE} qualifier.
-     *
-     * @return <code>true</code> if this filter should be permissive
-     */
+    // permissive
     protected boolean isPermissive(Object mappedValue) {
         if(mappedValue != null) {
             String[] values = (String[]) mappedValue;
@@ -137,12 +103,10 @@ public abstract class AuthenticatingFilter extends AuthenticationFilter {
         return false;
     }
 
-    /**
-     * Overrides the default behavior to call {@link #onAccessDenied} and swallow the exception if the exception is
-     * {@link UnauthenticatedException}.
-     */
+    // 覆盖默认方法，UnauthenticatedException发生时，执行认证流程
     @Override
     protected void cleanup(ServletRequest request, ServletResponse response, Exception existing) throws ServletException, IOException {
+        // 存在异常，切未认证异常则执行拒绝流程
         if (existing instanceof UnauthenticatedException || (existing instanceof ServletException && existing.getCause() instanceof UnauthenticatedException))
         {
             try {

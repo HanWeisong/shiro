@@ -30,6 +30,10 @@ import java.util.Map;
  *
  * @since 1.0
  */
+
+/**
+ * 默认的session上下文、提供 host sessionId 的存取方法
+ */
 public class DefaultSessionContext extends MapContext implements SessionContext {
 
     private static final long serialVersionUID = -1424160751361252966L;

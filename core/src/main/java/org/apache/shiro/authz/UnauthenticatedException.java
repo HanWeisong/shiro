@@ -28,6 +28,10 @@ package org.apache.shiro.authz;
  *
  * @since 0.1
  */
+
+/**
+ * 未认证异常类
+ */
 public class UnauthenticatedException extends AuthorizationException {
 
     /**

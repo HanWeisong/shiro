@@ -24,6 +24,10 @@ package org.apache.shiro.session.mgt;
  *
  * @since 0.1
  */
+
+/**
+ * 拥有验证session的管理器
+ */
 public interface ValidatingSessionManager extends SessionManager {
 
     /**
@@ -67,6 +71,9 @@ public interface ValidatingSessionManager extends SessionManager {
      * by using {@link SessionValidationScheduler}s.  The Shiro default SecurityManager implementations
      * needing session validation will create and use one by default if one is not provided by the
      * application configuration.
+     */
+    /**
+     * 验证所有session是否可用
      */
     void validateSessions();
 }

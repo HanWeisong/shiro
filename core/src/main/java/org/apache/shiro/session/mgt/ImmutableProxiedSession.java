@@ -40,6 +40,10 @@ import org.apache.shiro.session.Session;
  *
  * @since 0.9
  */
+
+/**
+ * 不可变的代理session实现类
+ */
 public class ImmutableProxiedSession extends ProxiedSession {
 
     /**

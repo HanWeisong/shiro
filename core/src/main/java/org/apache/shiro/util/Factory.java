@@ -25,6 +25,11 @@ package org.apache.shiro.util;
  * @param <T> The type of the instance returned by the Factory implementation.
  * @since 1.0
  */
+
+/**
+ * 工程接口
+ * @param <T>
+ */
 public interface Factory<T> {
 
     /**

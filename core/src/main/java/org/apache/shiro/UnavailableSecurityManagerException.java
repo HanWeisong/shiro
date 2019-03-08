@@ -24,6 +24,10 @@ package org.apache.shiro;
  *
  * @since 1.0
  */
+
+/**
+ * 安全管理器不可用异常类
+ */
 public class UnavailableSecurityManagerException extends ShiroException {
 
     public UnavailableSecurityManagerException(String message) {

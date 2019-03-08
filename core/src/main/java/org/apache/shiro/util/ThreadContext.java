@@ -43,6 +43,11 @@ import java.util.Map;
  * @see #remove()
  * @since 0.1
  */
+
+/**
+ * 抽象的线程上下文类是ThreadLocal的包装类，提供了bind unbind的 object的方法，key value 键值对。
+ * 主要用来存放SecurityManager Subject实例
+ */
 public abstract class ThreadContext {
 
     /**
@@ -58,6 +63,9 @@ public abstract class ThreadContext {
     /**
      * Default no-argument constructor.
      */
+    /**
+     * 默认无参构造方法
+     */
     protected ThreadContext() {
     }
 
@@ -66,6 +74,10 @@ public abstract class ThreadContext {
      * to the current thread by storing each object under a unique key.
      *
      * @return the map of bound resources
+     */
+    /**
+     * 获取集合中的所有资源
+     * @return
      */
     public static Map<Object, Object> getResources() {
         if (resources.get() == null){
@@ -82,6 +94,10 @@ public abstract class ThreadContext {
      *
      * @param newResources the resources to replace the existing {@link #getResources() resources}.
      * @since 1.0
+     */
+    /**
+     * 清空所有资源，保存新的资源
+     * @param newResources
      */
     public static void setResources(Map<Object, Object> newResources) {
         if (CollectionUtils.isEmpty(newResources)) {
@@ -101,11 +117,19 @@ public abstract class ThreadContext {
      *         is no value for that {@code key}.
      * @since 1.0
      */
+    /**
+     * 根据KEY获取对应的值
+     * @param key
+     * @return
+     */
     private static Object getValue(Object key) {
         Map<Object, Object> perThreadResources = resources.get();
         return perThreadResources != null ? perThreadResources.get(key) : null;
     }
 
+    /**
+     * 确认集合初始化
+     */
     private static void ensureResourcesInitialized(){
         if (resources.get() == null){
            resources.set(new HashMap<Object, Object>());
@@ -119,6 +143,11 @@ public abstract class ThreadContext {
      * @param key the key that identifies the value to return
      * @return the object keyed by <code>key</code> or <code>null</code> if
      *         no value exists for the specified <code>key</code>
+     */
+    /**
+     * 根据KEY获取对应的值
+     * @param key
+     * @return
      */
     public static Object get(Object key) {
         if (log.isTraceEnabled()) {
@@ -150,6 +179,11 @@ public abstract class ThreadContext {
      * @param value The value to bind to the thread.
      * @throws IllegalArgumentException if the <code>key</code> argument is <tt>null</tt>.
      */
+    /**
+     * 保存资源键值对
+     * @param key
+     * @param value
+     */
     public static void put(Object key, Object value) {
         if (key == null) {
             throw new IllegalArgumentException("key cannot be null");
@@ -178,6 +212,11 @@ public abstract class ThreadContext {
      * @return the object unbound or <tt>null</tt> if there was nothing bound
      *         under the specified <tt>key</tt> name.
      */
+    /**
+     * 根据key删除键值对
+     * @param key
+     * @return
+     */
     public static Object remove(Object key) {
         Map<Object, Object> perThreadResources = resources.get();
         Object value = perThreadResources != null ? perThreadResources.remove(key) : null;
@@ -199,6 +238,9 @@ public abstract class ThreadContext {
      *
      * @since 1.0
      */
+    /**
+     * 删除当前线程所有资源
+     */
     public static void remove() {
         resources.remove();
     }
@@ -217,6 +259,10 @@ public abstract class ThreadContext {
      *
      * @return the Subject object bound to the thread, or <tt>null</tt> if there isn't one bound.
      * @since 0.9
+     */
+    /**
+     * 获取缓存的安全管理器对象
+     * @return
      */
     public static SecurityManager getSecurityManager() {
         return (SecurityManager) get(SECURITY_MANAGER_KEY);
@@ -239,6 +285,10 @@ public abstract class ThreadContext {
      *                        null, nothing will be done.
      * @since 0.9
      */
+    /**
+     * 绑定安全管理器对象
+     * @param securityManager
+     */
     public static void bind(SecurityManager securityManager) {
         if (securityManager != null) {
             put(SECURITY_MANAGER_KEY, securityManager);
@@ -260,6 +310,10 @@ public abstract class ThreadContext {
      *         was none bound.
      * @since 0.9
      */
+    /**
+     * 解绑安全管理器对象（线程级）
+     * @return
+     */
     public static SecurityManager unbindSecurityManager() {
         return (SecurityManager) remove(SECURITY_MANAGER_KEY);
     }
@@ -276,6 +330,10 @@ public abstract class ThreadContext {
      *
      * @return the Subject object bound to the thread, or <tt>null</tt> if there isn't one bound.
      * @since 0.2
+     */
+    /**
+     * 获取当前线程主题对象
+     * @return
      */
     public static Subject getSubject() {
         return (Subject) get(SUBJECT_KEY);
@@ -297,6 +355,10 @@ public abstract class ThreadContext {
      * @param subject the Subject object to bind to the thread.  If the argument is null, nothing will be done.
      * @since 0.2
      */
+    /**
+     * 绑定主题对象到当前线程缓存
+     * @param subject
+     */
     public static void bind(Subject subject) {
         if (subject != null) {
             put(SUBJECT_KEY, subject);
@@ -316,6 +378,10 @@ public abstract class ThreadContext {
      *
      * @return the Subject object previously bound to the thread, or <tt>null</tt> if there was none bound.
      * @since 0.2
+     */
+    /**
+     * 当前线程解绑主题对象
+     * @return
      */
     public static Subject unbindSubject() {
         return (Subject) remove(SUBJECT_KEY);

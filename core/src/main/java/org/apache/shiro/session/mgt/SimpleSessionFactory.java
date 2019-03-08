@@ -25,6 +25,10 @@ import org.apache.shiro.session.Session;
  *
  * @since 1.0
  */
+
+/**
+ * 简单session工程类
+ */
 public class SimpleSessionFactory implements SessionFactory {
 
     /**
@@ -33,6 +37,11 @@ public class SimpleSessionFactory implements SessionFactory {
      *
      * @param initData the initialization data to be used during {@link Session} creation.
      * @return a new {@link SimpleSession SimpleSession} instance
+     */
+    /**
+     * 根据host构建session
+     * @param initData
+     * @return
      */
     public Session createSession(SessionContext initData) {
         if (initData != null) {

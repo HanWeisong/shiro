@@ -45,6 +45,10 @@ import java.util.List;
  *
  * @since 0.1
  */
+
+/**
+ * 授权器接口
+ */
 public interface Authorizer {
 
     /**

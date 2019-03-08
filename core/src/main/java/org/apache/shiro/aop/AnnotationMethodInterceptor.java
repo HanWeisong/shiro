@@ -30,14 +30,24 @@ import java.lang.annotation.Annotation;
  *
  * @since 0.9
  */
+
+/**
+ * 注解方法拦截器
+ */
 public abstract class AnnotationMethodInterceptor extends MethodInterceptorSupport {
 
+    /**
+     * 注解处理器
+     */
     private AnnotationHandler handler;
 
     /**
      * The resolver to use to find annotations on intercepted methods.
      *
      * @since 1.1
+     */
+    /**
+     * 注解解析器
      */
     private AnnotationResolver resolver;
 
@@ -47,6 +57,10 @@ public abstract class AnnotationMethodInterceptor extends MethodInterceptorSuppo
      * corresponding type.
      *
      * @param handler the handler to delegate to for processing the annotation.
+     */
+    /**
+     * 注解方法拦截器
+     * @param handler
      */
     public AnnotationMethodInterceptor(AnnotationHandler handler) {
         this(handler, new DefaultAnnotationResolver());
@@ -61,6 +75,11 @@ public abstract class AnnotationMethodInterceptor extends MethodInterceptorSuppo
      * @param handler  the handler to use to process any discovered annotation
      * @param resolver the resolver to use to locate/acquire the annotation
      * @since 1.1
+     */
+    /**
+     * 注解方法拦截器
+     * @param handler
+     * @param resolver
      */
     public AnnotationMethodInterceptor(AnnotationHandler handler, AnnotationResolver resolver) {
         if (handler == null) {
@@ -77,6 +96,10 @@ public abstract class AnnotationMethodInterceptor extends MethodInterceptorSuppo
      * @return the {@code AnnotationHandler} used to perform authorization behavior based on
      *         an annotation discovered at runtime.
      */
+    /**
+     * 获取注解处理器
+     * @return
+     */
     public AnnotationHandler getHandler() {
         return handler;
     }
@@ -87,6 +110,10 @@ public abstract class AnnotationMethodInterceptor extends MethodInterceptorSuppo
      *
      * @param handler the {@code AnnotationHandler} used to perform authorization behavior based on
      *                an annotation discovered at runtime.
+     */
+    /**
+     * 设置注解处理器
+     * @param handler
      */
     public void setHandler(AnnotationHandler handler) {
         this.handler = handler;
@@ -101,6 +128,10 @@ public abstract class AnnotationMethodInterceptor extends MethodInterceptorSuppo
      *         methods at runtime.
      * @since 1.1
      */
+    /**
+     * 获取注解解析器
+     * @return
+     */
     public AnnotationResolver getResolver() {
         return resolver;
     }
@@ -113,6 +144,10 @@ public abstract class AnnotationMethodInterceptor extends MethodInterceptorSuppo
      * @param resolver the {@code AnnotationResolver} to use to acquire annotations from intercepted
      *                 methods at runtime.
      * @since 1.1
+     */
+    /**
+     * 设置注解解析器
+     * @param resolver
      */
     public void setResolver(AnnotationResolver resolver) {
         this.resolver = resolver;
@@ -130,6 +165,11 @@ public abstract class AnnotationMethodInterceptor extends MethodInterceptorSuppo
      * @return <code>true</code> if this interceptor supports, that is, should inspect, the specified
      *         <code>MethodInvocation</code>, <code>false</code> otherwise.
      */
+    /**
+     * 是否支持注解拦截
+     * @param mi
+     * @return
+     */
     public boolean supports(MethodInvocation mi) {
         return getAnnotation(mi) != null;
     }
@@ -143,6 +183,11 @@ public abstract class AnnotationMethodInterceptor extends MethodInterceptorSuppo
      *
      * @param mi the MethodInvocation wrapping the Method from which the Annotation will be acquired.
      * @return the Annotation that this interceptor will process for the specified method invocation.
+     */
+    /**
+     * 获取指定方法调用对象的注解类实例
+     * @param mi
+     * @return
      */
     protected Annotation getAnnotation(MethodInvocation mi) {
         return getResolver().getAnnotation(mi, getHandler().getAnnotationClass());

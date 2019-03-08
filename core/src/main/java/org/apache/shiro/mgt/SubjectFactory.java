@@ -28,6 +28,10 @@ import java.util.Map;
  *
  * @since 1.0
  */
+
+/**
+ * Subject工厂接口
+ */
 public interface SubjectFactory {
 
     /**

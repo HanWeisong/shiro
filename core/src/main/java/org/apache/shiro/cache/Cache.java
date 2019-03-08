@@ -31,6 +31,12 @@ import java.util.Set;
  *
  * @since 0.2
  */
+
+/**
+ * Cache有效地存储临时对象，主要是为了提高应用程序的性能
+ * @param <K>
+ * @param <V>
+ */
 public interface Cache<K, V> {
 
     /**

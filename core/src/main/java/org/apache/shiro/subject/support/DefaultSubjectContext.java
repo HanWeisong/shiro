@@ -140,16 +140,20 @@ public class DefaultSubjectContext extends MapContext implements SubjectContext 
     }
 
     public PrincipalCollection resolvePrincipals() {
+        // 从缓存map中获取主体集合
         PrincipalCollection principals = getPrincipals();
 
+        // 为空，从认证信息中获取主体信息
         if (CollectionUtils.isEmpty(principals)) {
             //check to see if they were just authenticated:
+            // 检查他们是否只是经过身份验证
             AuthenticationInfo info = getAuthenticationInfo();
             if (info != null) {
                 principals = info.getPrincipals();
             }
         }
 
+        // 为空，从Subject信息中获取主体信息
         if (CollectionUtils.isEmpty(principals)) {
             Subject subject = getSubject();
             if (subject != null) {
@@ -157,6 +161,7 @@ public class DefaultSubjectContext extends MapContext implements SubjectContext 
             }
         }
 
+        // 为空，从session中获取主体信息
         if (CollectionUtils.isEmpty(principals)) {
             //try the session:
             Session session = resolveSession();
@@ -182,6 +187,7 @@ public class DefaultSubjectContext extends MapContext implements SubjectContext 
         if (session == null) {
             //try the Subject if it exists:
             Subject existingSubject = getSubject();
+            // 从主体信息中获取 session 信息
             if (existingSubject != null) {
                 session = existingSubject.getSession(false);
             }
@@ -189,11 +195,20 @@ public class DefaultSubjectContext extends MapContext implements SubjectContext 
         return session;
     }
 
+    /**
+     * 是否开启了session创建
+     * @return
+     */
     public boolean isSessionCreationEnabled() {
         Boolean val = getTypedValue(SESSION_CREATION_ENABLED, Boolean.class);
         return val == null || val;
     }
 
+    /**
+     * 设置是否开启sessino创建
+     * @param enabled whether or not the constructed {@code Subject} instance should be allowed to create a session,
+     * {@code false} otherwise.
+     */
     public void setSessionCreationEnabled(boolean enabled) {
         nullSafePut(SESSION_CREATION_ENABLED, enabled);
     }
@@ -207,16 +222,22 @@ public class DefaultSubjectContext extends MapContext implements SubjectContext 
         put(AUTHENTICATED, authc);
     }
 
+    /**
+     * 是否已经认证
+     * @return
+     */
     public boolean resolveAuthenticated() {
         Boolean authc = getTypedValue(AUTHENTICATED, Boolean.class);
         if (authc == null) {
             //see if there is an AuthenticationInfo object.  If so, the very presence of one indicates a successful
             //authentication attempt:
+            // 尝试从认证信息中获取
             AuthenticationInfo info = getAuthenticationInfo();
             authc = info != null;
         }
         if (!authc) {
             //fall back to a session check:
+            // 从session中获取是否认证
             Session session = resolveSession();
             if (session != null) {
                 Boolean sessionAuthc = (Boolean) session.getAttribute(AUTHENTICATED_SESSION_KEY);

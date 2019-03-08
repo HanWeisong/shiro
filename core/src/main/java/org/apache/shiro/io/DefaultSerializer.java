@@ -25,6 +25,11 @@ import java.io.*;
  *
  * @since 0.9
  */
+
+/**
+ * 默认序列化实现
+ * @param <T>
+ */
 public class DefaultSerializer<T> implements Serializer<T> {
 
     /**

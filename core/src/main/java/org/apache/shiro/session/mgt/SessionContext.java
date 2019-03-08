@@ -39,6 +39,10 @@ import java.util.Map;
  * @see org.apache.shiro.session.mgt.SessionFactory SessionFactory
  * @since 1.0
  */
+
+/**
+ * session上下文，基于MAP封装的计划类，提供host sessionId的存取功能
+ */
 public interface SessionContext extends Map<String, Object> {
 
     /**

@@ -34,6 +34,10 @@ import java.util.Date;
  *
  * @since 0.1
  */
+
+/**
+ * session接口，抽象出sessionId session开始时间 过期时间 存取session等接口
+ */
 public interface Session {
 
     /**

@@ -30,6 +30,10 @@ import javax.servlet.ServletContext;
  *
  * @since 1.2
  */
+
+/**
+ * 可变的web环境抽象接口，增加了设置信息
+ */
 public interface MutableWebEnvironment extends WebEnvironment {
 
     /**

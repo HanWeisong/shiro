@@ -31,6 +31,10 @@ import java.util.Set;
  *
  * @since 1.0
  */
+
+/**
+ * FilterChain管理器
+ */
 public interface FilterChainManager {
 
     /**

@@ -53,6 +53,10 @@ import java.util.concurrent.ConcurrentMap;
  * @see CachingSessionDAO
  * @since 0.1
  */
+
+/**
+ * 内存存储session的dao类
+ */
 public class MemorySessionDAO extends AbstractSessionDAO {
 
     private static final Logger log = LoggerFactory.getLogger(MemorySessionDAO.class);
@@ -60,6 +64,7 @@ public class MemorySessionDAO extends AbstractSessionDAO {
     private ConcurrentMap<Serializable, Session> sessions;
 
     public MemorySessionDAO() {
+        // 支持并发的 HashMap
         this.sessions = new ConcurrentHashMap<Serializable, Session>();
     }
 
@@ -95,6 +100,10 @@ public class MemorySessionDAO extends AbstractSessionDAO {
         }
     }
 
+    /**
+     * 换取所有激活的session集合
+     * @return
+     */
     public Collection<Session> getActiveSessions() {
         Collection<Session> values = sessions.values();
         if (CollectionUtils.isEmpty(values)) {

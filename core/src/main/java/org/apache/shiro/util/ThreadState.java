@@ -40,6 +40,10 @@ package org.apache.shiro.util;
  *
  * @since 1.0
  */
+
+/**
+ * 线程状态接口
+ */
 public interface ThreadState {
 
     /**

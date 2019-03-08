@@ -24,6 +24,10 @@ package org.apache.shiro.env;
  *
  * @since 1.2
  */
+
+/**
+ * 必须类型异常
+ */
 public class RequiredTypeException extends EnvironmentException {
 
     public RequiredTypeException(String message) {

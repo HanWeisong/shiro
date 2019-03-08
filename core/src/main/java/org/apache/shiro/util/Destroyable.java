@@ -23,6 +23,10 @@ package org.apache.shiro.util;
  *
  * @since 0.2
  */
+
+/**
+ * 可销毁的接口
+ */
 public interface Destroyable {
 
     /**

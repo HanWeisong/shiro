@@ -29,6 +29,10 @@ package org.apache.shiro.authz.permission;
  *
  * @since 0.9
  */
+
+/**
+ * 需要提供权限解析器接口
+ */
 public interface PermissionResolverAware {
 
     /**

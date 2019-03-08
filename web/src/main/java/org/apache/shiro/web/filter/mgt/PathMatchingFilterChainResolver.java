@@ -39,12 +39,17 @@ import javax.servlet.ServletResponse;
  *
  * @since 1.0
  */
+
+/**
+ * 路径匹配FilterChain解析器
+ */
 public class PathMatchingFilterChainResolver implements FilterChainResolver {
 
     private static transient final Logger log = LoggerFactory.getLogger(PathMatchingFilterChainResolver.class);
 
+    // FilterChain管理器
     private FilterChainManager filterChainManager;
-
+    // 正则表达式匹配器
     private PatternMatcher pathMatcher;
 
     public PathMatchingFilterChainResolver() {

@@ -28,6 +28,10 @@ package org.apache.shiro.cache;
  *
  * @since 0.9
  */
+
+/**
+ * 缓存管理器接口
+ */
 public interface CacheManager {
 
     /**
@@ -37,6 +41,12 @@ public interface CacheManager {
      * @param name the name of the cache to acquire.
      * @return the Cache with the given name
      * @throws CacheException if there is an error acquiring the Cache instance.
+     */
+    /**
+     * 根据缓存名获取缓存
+     * @param name
+     * @return
+     * @throws CacheException
      */
     public <K, V> Cache<K, V> getCache(String name) throws CacheException;
 }

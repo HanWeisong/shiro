@@ -33,18 +33,31 @@ import java.net.URL;
  * @see #getInputStreamForPath(String)
  * @since 0.2
  */
+
+/**
+ * 资源工具类
+ */
 public class ResourceUtils {
 
     /**
      * Resource path prefix that specifies to load from a classpath location, value is <b>{@code classpath:}</b>
      */
+    /**
+     * classpath
+     */
     public static final String CLASSPATH_PREFIX = "classpath:";
     /**
      * Resource path prefix that specifies to load from a url location, value is <b>{@code url:}</b>
      */
+    /**
+     * url
+     */
     public static final String URL_PREFIX = "url:";
     /**
      * Resource path prefix that specifies to load from a file location, value is <b>{@code file:}</b>
+     */
+    /**
+     * file
      */
     public static final String FILE_PREFIX = "file:";
 
@@ -70,6 +83,9 @@ public class ResourceUtils {
      * @since 0.9
      */
     @SuppressWarnings({"UnusedDeclaration"})
+    /**
+     * 给定的资源地址是否含有资源前缀
+     */
     public static boolean hasResourcePrefix(String resourcePath) {
         return resourcePath != null &&
                 (resourcePath.startsWith(CLASSPATH_PREFIX) ||
@@ -84,6 +100,11 @@ public class ResourceUtils {
      * @param resourcePath the path of the resource to check.
      * @return {@code true} if the resource at the specified path exists, {@code false} otherwise.
      * @since 0.9
+     */
+    /**
+     * 判断资源是否存在
+     * @param resourcePath
+     * @return
      */
     public static boolean resourceExists(String resourcePath) {
         InputStream stream = null;
@@ -119,6 +140,12 @@ public class ResourceUtils {
      * @return the InputStraem for the specified resource.
      * @throws IOException if there is a problem acquiring the resource at the specified path.
      */
+    /**
+     * 获取给定资源地址的输入流
+     * @param resourcePath
+     * @return
+     * @throws IOException
+     */
     public static InputStream getInputStreamForPath(String resourcePath) throws IOException {
 
         InputStream is;
@@ -142,6 +169,12 @@ public class ResourceUtils {
         return is;
     }
 
+    /**
+     * 从文件加载
+     * @param path
+     * @return
+     * @throws IOException
+     */
     private static InputStream loadFromFile(String path) throws IOException {
         if (log.isDebugEnabled()) {
             log.debug("Opening file [" + path + "]...");
@@ -149,12 +182,23 @@ public class ResourceUtils {
         return new FileInputStream(path);
     }
 
+    /**
+     * 从URL加载
+     * @param urlPath
+     * @return
+     * @throws IOException
+     */
     private static InputStream loadFromUrl(String urlPath) throws IOException {
         log.debug("Opening url {}", urlPath);
         URL url = new URL(urlPath);
         return url.openStream();
     }
 
+    /**
+     * 自定义加载器，改变加载过程 从classpath加载（先线程加载器加载、再class加载器加载、再系统加载器加载）
+     * @param path
+     * @return
+     */
     private static InputStream loadFromClassPath(String path) {
         log.debug("Opening resource from class path [{}]", path);
         return ClassUtils.getResourceAsStream(path);
@@ -170,6 +214,10 @@ public class ResourceUtils {
      * argument is {@code null}, this method does nothing.  It returns quietly in all cases.
      *
      * @param is the {@code InputStream} to close, logging any {@code IOException} that might occur.
+     */
+    /**
+     * 关闭输入流
+     * @param is
      */
     public static void close(InputStream is) {
         if (is != null) {

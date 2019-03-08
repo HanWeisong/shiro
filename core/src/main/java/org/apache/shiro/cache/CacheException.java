@@ -26,6 +26,10 @@ import org.apache.shiro.ShiroException;
  *
  * @since 0.2
  */
+
+/**
+ * 缓存异常类
+ */
 public class CacheException extends ShiroException
 {
 

@@ -54,6 +54,10 @@ import org.apache.shiro.util.ThreadState;
  * @see org.apache.shiro.concurrent.SubjectAwareExecutor SubjectAwareExecutor
  * @since 1.0
  */
+
+/**
+ * 主体线程类
+ */
 public class SubjectRunnable implements Runnable {
 
     protected final ThreadState threadState;

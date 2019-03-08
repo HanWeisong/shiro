@@ -31,6 +31,12 @@ import java.util.Set;
  *
  * @since 1.0
  */
+
+/**
+ * Map实现的缓存
+ * @param <K>
+ * @param <V>
+ */
 public class MapCache<K, V> implements Cache<K, V> {
 
     /**

@@ -25,6 +25,10 @@ import java.util.EventObject;
  *
  * @since 1.3
  */
+
+/**
+ * 事件抽象类
+ */
 public abstract class Event extends EventObject {
 
     private final long timestamp; //millis since Epoch (UTC time zone).

@@ -25,6 +25,10 @@ import org.apache.shiro.ShiroException;
  *
  * @since 1.2
  */
+
+/**
+ * 运行环境异常
+ */
 public class EnvironmentException extends ShiroException {
 
     public EnvironmentException(String message) {

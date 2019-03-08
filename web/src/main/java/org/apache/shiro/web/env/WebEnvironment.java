@@ -29,6 +29,10 @@ import javax.servlet.ServletContext;
  *
  * @since 1.2
  */
+
+/**
+ * web环境抽象接口
+ */
 public interface WebEnvironment extends Environment {
 
     /**

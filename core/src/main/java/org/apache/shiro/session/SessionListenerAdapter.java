@@ -24,6 +24,10 @@ package org.apache.shiro.session;
  *
  * @since 1.0
  */
+
+/**
+ * session监听器no-op实现类
+ */
 public class SessionListenerAdapter implements SessionListener {
 
     /**

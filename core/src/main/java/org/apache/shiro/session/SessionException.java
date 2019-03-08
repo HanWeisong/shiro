@@ -27,6 +27,10 @@ import org.apache.shiro.ShiroException;
  *
  * @since 0.1
  */
+
+/**
+ * session异常类
+ */
 public class SessionException extends ShiroException {
 
     /**

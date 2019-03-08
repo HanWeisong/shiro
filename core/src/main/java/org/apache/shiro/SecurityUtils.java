@@ -28,6 +28,11 @@ import org.apache.shiro.util.ThreadContext;
  *
  * @since 0.2
  */
+
+/**
+ * 抽象类，通过当前线程缓存对象提供获取主题和安全管理对象功能
+ * 当前运行环境主要包括：SecurityManager、Subject
+ */
 public abstract class SecurityUtils {
 
     /**
@@ -49,6 +54,10 @@ public abstract class SecurityUtils {
      *                               {@link SecurityManager SecurityManager} instance is available with which to obtain
      *                               a {@code Subject}, which which is considered an invalid application configuration
      *                               - a Subject should <em>always</em> be available to the caller.
+     */
+    /**
+     * 从当前线程缓存获取主题对象，如果没创建则创建并保持到缓存集合
+     * @return
      */
     public static Subject getSubject() {
         Subject subject = ThreadContext.getSubject();
@@ -91,6 +100,10 @@ public abstract class SecurityUtils {
      *
      * @param securityManager the securityManager instance to set as a VM static singleton.
      */
+    /**
+     * 设置安全管理器对象
+     * @param securityManager
+     */
     public static void setSecurityManager(SecurityManager securityManager) {
         SecurityUtils.securityManager = securityManager;
     }
@@ -110,6 +123,11 @@ public abstract class SecurityUtils {
      * @throws UnavailableSecurityManagerException
      *          if there is no {@code SecurityManager} instance available to the
      *          calling code, which typically indicates an invalid application configuration.
+     */
+    /**
+     * 从当前缓存集合中获取安全管理器对象，如不存在从当前对象中获取，如不存在抛出异常
+     * @return
+     * @throws UnavailableSecurityManagerException
      */
     public static SecurityManager getSecurityManager() throws UnavailableSecurityManagerException {
         SecurityManager securityManager = ThreadContext.getSecurityManager();

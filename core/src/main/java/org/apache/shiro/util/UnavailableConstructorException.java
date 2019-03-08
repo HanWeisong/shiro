@@ -27,6 +27,10 @@ import org.apache.shiro.ShiroException;
  *
  * @since 0.2
  */
+
+/**
+ * 不可用构造函数异常类
+ */
 public class UnavailableConstructorException extends ShiroException
 {
 

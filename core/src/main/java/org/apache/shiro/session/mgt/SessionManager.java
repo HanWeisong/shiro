@@ -27,6 +27,10 @@ import org.apache.shiro.session.SessionException;
  *
  * @since 0.1
  */
+
+/**
+ * session管理器
+ */
 public interface SessionManager {
 
     /**
@@ -43,6 +47,11 @@ public interface SessionManager {
      * @return the newly created session.
      * @see SessionFactory#createSession(SessionContext)
      * @since 1.0
+     */
+    /**
+     * 基于指定的上下文初始化数据启动新会话，底层*实现可以使用该数据来确定创建内部Session实例的准确程度
+     * @param context
+     * @return
      */
     Session start(SessionContext context);
 

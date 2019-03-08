@@ -25,6 +25,10 @@ package org.apache.shiro.session.mgt;
  * @see org.apache.shiro.session.mgt.DefaultSessionManager#setSessionValidationScheduler(SessionValidationScheduler)
  * @since 0.1
  */
+
+/**
+ * session验证计划程序接口
+ */
 public interface SessionValidationScheduler {
 
     /**

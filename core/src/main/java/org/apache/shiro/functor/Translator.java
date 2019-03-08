@@ -31,6 +31,12 @@ package org.apache.shiro.functor;
  *
  * @since 1.2
  */
+
+/**
+ * 翻译接口
+ * @param <I>
+ * @param <O>
+ */
 public interface Translator<I,O> {
 
     /**

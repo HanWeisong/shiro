@@ -43,6 +43,10 @@ import java.io.Serializable;
  *
  * @since 1.0
  */
+
+/**
+ * sessionDao的抽象类（增加了sessionid生成器，主要实现了生成sessionid的逻辑，主要方法子类实现）
+ */
 public abstract class AbstractSessionDAO implements SessionDAO {
 
     /**

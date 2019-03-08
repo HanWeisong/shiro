@@ -25,6 +25,10 @@ package org.apache.shiro.util;
  *
  * @since 0.9
  */
+
+/**
+ * 可设置名称的接口抽象
+ */
 public interface Nameable {
 
     /**

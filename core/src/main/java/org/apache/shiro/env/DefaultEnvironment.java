@@ -31,6 +31,10 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @since 1.2
  */
+
+/**
+ * 默认环境实现
+ */
 public class DefaultEnvironment implements NamedObjectEnvironment, Destroyable {
 
     /**
@@ -39,11 +43,17 @@ public class DefaultEnvironment implements NamedObjectEnvironment, Destroyable {
      */
     public static final String DEFAULT_SECURITY_MANAGER_KEY = "securityManager";
 
+    /**
+     * 缓存
+     */
     protected final Map<String, Object> objects;
     private String securityManagerName;
 
     /**
      * Creates a new instance with a thread-safe {@link ConcurrentHashMap} backing map.
+     */
+    /**
+     * 线程安全的缓存环境
      */
     public DefaultEnvironment() {
         this(new ConcurrentHashMap<String, Object>());
@@ -55,6 +65,9 @@ public class DefaultEnvironment implements NamedObjectEnvironment, Destroyable {
      * @param seed backing map to use to maintain Shiro objects.
      */
     @SuppressWarnings({"unchecked"})
+    /**
+     * 构造方法
+     */
     public DefaultEnvironment(Map<String, ?> seed) {
         this.securityManagerName = DEFAULT_SECURITY_MANAGER_KEY;
         if (seed == null) {
@@ -75,6 +88,11 @@ public class DefaultEnvironment implements NamedObjectEnvironment, Destroyable {
      * @return the application's {@code SecurityManager} instance accessible in the backing map using the
      *         {@link #getSecurityManagerName() securityManagerName} property as the lookup key.
      */
+    /**
+     * 获取安全管理器
+     * @return
+     * @throws IllegalStateException
+     */
     public SecurityManager getSecurityManager() throws IllegalStateException {
         SecurityManager securityManager = lookupSecurityManager();
         if (securityManager == null) {
@@ -84,6 +102,10 @@ public class DefaultEnvironment implements NamedObjectEnvironment, Destroyable {
         return securityManager;
     }
 
+    /**
+     * 设置安全管理器
+     * @param securityManager
+     */
     public void setSecurityManager(SecurityManager securityManager) {
         if (securityManager == null) {
             throw new IllegalArgumentException("Null SecurityManager instances are not allowed.");
@@ -97,6 +119,10 @@ public class DefaultEnvironment implements NamedObjectEnvironment, Destroyable {
      *
      * @return the {@code SecurityManager} in the backing map, or {@code null} if it has not yet been populated.
      */
+    /**
+     * 查找安全管理器
+     * @return
+     */
     protected SecurityManager lookupSecurityManager() {
         String name = getSecurityManagerName();
         return getObject(name, SecurityManager.class);
@@ -108,6 +134,10 @@ public class DefaultEnvironment implements NamedObjectEnvironment, Destroyable {
      *
      * @return the name of the {@link SecurityManager} instance in the backing map.  Used as a key to lookup the
      *         instance.
+     */
+    /**
+     * 获取安全管理器的名字
+     * @return
      */
     public String getSecurityManagerName() {
         return securityManagerName;
@@ -134,6 +164,9 @@ public class DefaultEnvironment implements NamedObjectEnvironment, Destroyable {
     }
 
     @SuppressWarnings({"unchecked"})
+    /**
+     * 获取缓存数据
+     */
     public <T> T getObject(String name, Class<T> requiredType) throws RequiredTypeException {
         if (name == null) {
             throw new NullPointerException("name parameter cannot be null.");
@@ -152,6 +185,11 @@ public class DefaultEnvironment implements NamedObjectEnvironment, Destroyable {
         return (T)o;
     }
 
+    /**
+     * 设置缓存数据
+     * @param name
+     * @param instance
+     */
     public void setObject(String name, Object instance) {
         if (name == null) {
             throw new NullPointerException("name parameter cannot be null.");

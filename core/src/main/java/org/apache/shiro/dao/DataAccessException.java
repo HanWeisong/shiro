@@ -28,6 +28,10 @@ import org.apache.shiro.ShiroException;
  *
  * @since 1.2
  */
+
+/**
+ * 尝试访问数据时表示问题的通用异常。
+ */
 public abstract class DataAccessException extends ShiroException {
 
     /**

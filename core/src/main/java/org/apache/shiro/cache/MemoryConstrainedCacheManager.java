@@ -33,6 +33,10 @@ import org.apache.shiro.util.SoftHashMap;
  *
  * @since 1.0
  */
+
+/**
+ * MapCache的缓存管理器
+ */
 public class MemoryConstrainedCacheManager extends AbstractCacheManager {
 
     /**

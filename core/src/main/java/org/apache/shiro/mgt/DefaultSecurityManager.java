@@ -267,9 +267,11 @@ public class DefaultSecurityManager extends SessionsSecurityManager {
     public Subject login(Subject subject, AuthenticationToken token) throws AuthenticationException {
         AuthenticationInfo info;
         try {
+            // 认证
             info = authenticate(token);
         } catch (AuthenticationException ae) {
             try {
+                // 登录失败流程
                 onFailedLogin(token, ae, subject);
             } catch (Exception e) {
                 if (log.isInfoEnabled()) {
@@ -486,6 +488,7 @@ public class DefaultSecurityManager extends SessionsSecurityManager {
 
         PrincipalCollection principals = context.resolvePrincipals();
 
+        // 在上下文中找不到标识（PrincipalCollection）。, 寻找一个被记住的身份
         if (CollectionUtils.isEmpty(principals)) {
             log.trace("No identity (PrincipalCollection) found in the context.  Looking for a remembered identity.");
 

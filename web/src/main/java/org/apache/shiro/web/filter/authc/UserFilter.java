@@ -18,11 +18,11 @@
  */
 package org.apache.shiro.web.filter.authc;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 /**
  * Filter that allows access to resources if the accessor is a known user, which is defined as
@@ -35,17 +35,7 @@ import org.apache.shiro.web.filter.AccessControlFilter;
  */
 public class UserFilter extends AccessControlFilter {
 
-    /**
-     * Returns <code>true</code> if the request is a
-     * {@link #isLoginRequest(javax.servlet.ServletRequest, javax.servlet.ServletResponse) loginRequest} or
-     * if the current {@link #getSubject(javax.servlet.ServletRequest, javax.servlet.ServletResponse) subject}
-     * is not <code>null</code>, <code>false</code> otherwise.
-     *
-     * @return <code>true</code> if the request is a
-     * {@link #isLoginRequest(javax.servlet.ServletRequest, javax.servlet.ServletResponse) loginRequest} or
-     * if the current {@link #getSubject(javax.servlet.ServletRequest, javax.servlet.ServletResponse) subject}
-     * is not <code>null</code>, <code>false</code> otherwise.
-     */
+    // 是登录请求则通过，非登录请求 如果是已知用户则通过
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         if (isLoginRequest(request, response)) {
             return true;
@@ -56,12 +46,7 @@ public class UserFilter extends AccessControlFilter {
         }
     }
 
-    /**
-     * This default implementation simply calls
-     * {@link #saveRequestAndRedirectToLogin(javax.servlet.ServletRequest, javax.servlet.ServletResponse) saveRequestAndRedirectToLogin}
-     * and then immediately returns <code>false</code>, thereby preventing the chain from continuing so the redirect may
-     * execute.
-     */
+    // 重定向到登录页面
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         saveRequestAndRedirectToLogin(request, response);
         return false;

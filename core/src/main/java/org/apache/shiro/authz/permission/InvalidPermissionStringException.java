@@ -27,6 +27,10 @@ import org.apache.shiro.ShiroException;
  *
  * @since 0.9
  */
+
+/**
+ * 不可用权限异常类
+ */
 public class InvalidPermissionStringException extends ShiroException
 {
 

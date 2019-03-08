@@ -27,6 +27,10 @@ import org.apache.shiro.authz.Permission;
  *
  * @since 0.9
  */
+
+/**
+ * 通配符权限解析器
+ */
 public class WildcardPermissionResolver implements PermissionResolver {
 
     /**

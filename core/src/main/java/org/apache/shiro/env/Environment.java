@@ -33,6 +33,10 @@ import org.apache.shiro.mgt.SecurityManager;
  *
  * @since 1.2
  */
+
+/**
+ * 运行环境接口
+ */
 public interface Environment {
 
     /**

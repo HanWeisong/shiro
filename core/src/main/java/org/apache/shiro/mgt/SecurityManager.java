@@ -54,6 +54,10 @@ import org.apache.shiro.subject.SubjectContext;
  * @see org.apache.shiro.mgt.DefaultSecurityManager
  * @since 0.2
  */
+
+/**
+ * 安全管理器接口，抽象了登录、登出、创建主题接口
+ */
 public interface SecurityManager extends Authenticator, Authorizer, SessionManager {
 
     /**

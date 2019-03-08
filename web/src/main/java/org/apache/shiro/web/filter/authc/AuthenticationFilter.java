@@ -25,71 +25,31 @@ import org.apache.shiro.web.util.WebUtils;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-/**
- * Base class for all Filters that require the current user to be authenticated. This class encapsulates the
- * logic of checking whether a user is already authenticated in the system while subclasses are required to perform
- * specific logic for unauthenticated requests.
- *
- * @since 0.9
- */
+// 认证过滤器
+// 要求当前用户进行身份验证的所有过滤器的基类。, 此类封装*逻辑，用于检查用户是否已在系统中进行身份验证，而子类则需要为未经身份验证的请求执行*特定逻辑
 public abstract class AuthenticationFilter extends AccessControlFilter {
-
-    //TODO - complete JavaDoc
 
     public static final String DEFAULT_SUCCESS_URL = "/";
 
     private String successUrl = DEFAULT_SUCCESS_URL;
 
-    /**
-     * Returns the success url to use as the default location a user is sent after logging in.  Typically a redirect
-     * after login will redirect to the originally request URL; this property is provided mainly as a fallback in case
-     * the original request URL is not available or not specified.
-     * <p/>
-     * The default value is {@link #DEFAULT_SUCCESS_URL}.
-     *
-     * @return the success url to use as the default location a user is sent after logging in.
-     */
+    // 获取登录成功后跳转的地址
     public String getSuccessUrl() {
         return successUrl;
     }
 
-    /**
-     * Sets the default/fallback success url to use as the default location a user is sent after logging in.  Typically
-     * a redirect after login will redirect to the originally request URL; this property is provided mainly as a
-     * fallback in case the original request URL is not available or not specified.
-     * <p/>
-     * The default value is {@link #DEFAULT_SUCCESS_URL}.
-     *
-     * @param successUrl the success URL to redirect the user to after a successful login.
-     */
+    // 重写设置登录成功后跳转的地址
     public void setSuccessUrl(String successUrl) {
         this.successUrl = successUrl;
     }
 
-
-    /**
-     * Determines whether the current subject is authenticated.
-     * <p/>
-     * The default implementation {@link #getSubject(javax.servlet.ServletRequest, javax.servlet.ServletResponse) acquires}
-     * the currently executing Subject and then returns
-     * {@link org.apache.shiro.subject.Subject#isAuthenticated() subject.isAuthenticated()};
-     *
-     * @return true if the subject is authenticated; false if the subject is unauthenticated
-     */
+    // 是否允许访问 如果已认证则通过，如果未认证则不通过
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         Subject subject = getSubject(request, response);
         return subject.isAuthenticated();
     }
 
-    /**
-     * Redirects to user to the previously attempted URL after a successful login.  This implementation simply calls
-     * <code>{@link org.apache.shiro.web.util.WebUtils WebUtils}.{@link WebUtils#redirectToSavedRequest(javax.servlet.ServletRequest, javax.servlet.ServletResponse, String) redirectToSavedRequest}</code>
-     * using the {@link #getSuccessUrl() successUrl} as the {@code fallbackUrl} argument to that call.
-     *
-     * @param request  the incoming request
-     * @param response the outgoing response
-     * @throws Exception if there is a problem redirecting.
-     */
+    // 发出成功重定向，登录成功后重定向到之前的访问的页面
     protected void issueSuccessRedirect(ServletRequest request, ServletResponse response) throws Exception {
         WebUtils.redirectToSavedRequest(request, response, getSuccessUrl());
     }

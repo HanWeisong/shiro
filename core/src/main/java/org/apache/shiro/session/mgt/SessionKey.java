@@ -31,6 +31,10 @@ import java.io.Serializable;
  *
  * @since 1.0
  */
+
+/**
+ * sessionkey接口 sessionId
+ */
 public interface SessionKey {
 
     /**

@@ -31,10 +31,17 @@ import java.util.Date;
  *
  * @since 0.9
  */
+
+/**
+ * 代理session接口实现
+ */
 public class ProxiedSession implements Session {
 
     /**
      * The proxied instance
+     */
+    /**
+     * 代理实例 session实例
      */
     protected final Session delegate;
 

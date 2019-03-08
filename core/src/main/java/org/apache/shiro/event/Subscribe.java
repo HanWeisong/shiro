@@ -39,6 +39,10 @@ import java.lang.annotation.Target;
  *
  * @since 1.3
  */
+
+/**
+ * 订阅注解
+ */
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.METHOD)
 public @interface Subscribe {

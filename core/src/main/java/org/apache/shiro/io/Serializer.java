@@ -29,6 +29,11 @@ package org.apache.shiro.io;
  * @param <T> The type of the object being serialized and deserialized.
  * @since 0.9
  */
+
+/**
+ * 序列化、反序列化接口
+ * @param <T>
+ */
 public interface Serializer<T> {
 
     /**

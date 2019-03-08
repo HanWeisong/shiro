@@ -50,8 +50,19 @@ import java.util.Map;
  */
 public interface PrincipalMap extends PrincipalCollection, Map<String,Object> {
 
+    /**
+     * 获取指定的域名主体集合
+     * @param realmName
+     * @return
+     */
     Map<String,Object> getRealmPrincipals(String realmName);
 
+    /**
+     * 设置指定域名的主体集合
+     * @param realmName
+     * @param principals
+     * @return
+     */
     Map<String,Object> setRealmPrincipals(String realmName, Map<String,Object> principals);
 
     Object setRealmPrincipal(String realmName, String principalName, Object principal);

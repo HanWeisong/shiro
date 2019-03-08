@@ -26,6 +26,10 @@ import org.apache.shiro.ShiroException;
  *
  * @since 0.2
  */
+
+/**
+ * 实例化异常类
+ */
 public class InstantiationException extends ShiroException
 {
 

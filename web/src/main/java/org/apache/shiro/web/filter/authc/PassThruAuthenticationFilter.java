@@ -21,27 +21,8 @@ package org.apache.shiro.web.filter.authc;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-/**
- * An authentication filter that redirects the user to the login page when they are trying to access
- * a protected resource.  However, if the user is trying to access the login page, the filter lets
- * the request pass through to the application code.
- * <p/>
- * The difference between this filter and the {@link FormAuthenticationFilter FormAuthenticationFilter} is that
- * on a login submission (by default an HTTP POST to the login URL), the <code>FormAuthenticationFilter</code> filter
- * attempts to automatically authenticate the user by passing the <code>username</code> and <code>password</code>
- * request parameter values to
- * {@link org.apache.shiro.subject.Subject#login(org.apache.shiro.authc.AuthenticationToken) Subject.login(usernamePasswordToken)}
- * directly.
- * <p/>
- * Conversely, this controller always passes all requests to the {@link #setLoginUrl loginUrl} through, both GETs and
- * POSTs.  This is useful in cases where the developer wants to write their own login behavior, which should include a
- * call to {@link org.apache.shiro.subject.Subject#login(org.apache.shiro.authc.AuthenticationToken) Subject.login(AuthenticationToken)}
- * at some point.  For example,  if the developer has their own custom MVC login controller or validator,
- * this <code>PassThruAuthenticationFilter</code> may be appropriate.
- *
- * @see FormAuthenticationFilter
- * @since 0.9
- */
+// 登录请求通过，非登录请求调整到登录地址（适合自己的登录逻辑）
+// 和FormAuthenticationFilter的区别是 FormAuthenticationFilter是POST方法请求时执行登录流程（POST /login）
 public class PassThruAuthenticationFilter extends AuthenticationFilter {
 
     //TODO - complete JavaDoc

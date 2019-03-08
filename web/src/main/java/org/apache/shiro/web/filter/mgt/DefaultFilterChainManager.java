@@ -50,6 +50,7 @@ public class DefaultFilterChainManager implements FilterChainManager {
 
     private FilterConfig filterConfig;
 
+    // 维护FilterChain管理器管理的filter集合
     private Map<String, Filter> filters; //pool of filters available for creating chains
 
     private Map<String, NamedFilterList> filterChains; //key: chain name, value: chain
@@ -328,6 +329,10 @@ public class DefaultFilterChainManager implements FilterChainManager {
      * Initializes the filter by calling <code>filter.init( {@link #getFilterConfig() getFilterConfig()} );</code>.
      *
      * @param filter the filter to initialize with the {@code FilterConfig}.
+     */
+    /**
+     * 初始化filter
+     * @param filter
      */
     protected void initFilter(Filter filter) {
         FilterConfig filterConfig = getFilterConfig();

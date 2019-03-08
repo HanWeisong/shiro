@@ -26,6 +26,10 @@ import java.lang.reflect.Method;
  *
  * @since 0.1
  */
+
+/**
+ * 方法调用抽象接口
+ */
 public interface MethodInvocation {
 
     /**
@@ -34,6 +38,11 @@ public interface MethodInvocation {
      * @return the result of the Method invocation.
      * @throws Throwable if the method or chain throws a Throwable
      */
+    /**
+     * 继续执行方法调用链
+     * @return
+     * @throws Throwable
+     */
     Object proceed() throws Throwable;
 
     /**
@@ -41,12 +50,20 @@ public interface MethodInvocation {
      *
      * @return the actual {@link Method Method} to be invoked.
      */
+    /**
+     * 返回执行的Method实例
+     * @return
+     */
     Method getMethod();
 
     /**
      * Returns the (possibly null) arguments to be supplied to the method invocation.
      *
      * @return the (possibly null) arguments to be supplied to the method invocation.
+     */
+    /**
+     * 返回被拦截执行的方法的参数
+     * @return
      */
     Object[] getArguments();
 

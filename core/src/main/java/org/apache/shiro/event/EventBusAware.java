@@ -33,6 +33,10 @@ package org.apache.shiro.event;
  *
  * @since 1.3
  */
+
+/**
+ * 需要设置事件bus的接口
+ */
 public interface EventBusAware {
 
     /**

@@ -27,6 +27,10 @@ import org.apache.shiro.subject.Subject;
  *
  * @since 1.2
  */
+
+/**
+ * 默认的session存储评估器
+ */
 public class DefaultSessionStorageEvaluator implements SessionStorageEvaluator {
 
     /**

@@ -39,6 +39,10 @@ import java.util.Map;
  *
  * @since 1.0
  */
+
+/**
+ * 主体线程状态类
+ */
 public class SubjectThreadState implements ThreadState {
 
     private Map<Object, Object> originalResources;
@@ -92,11 +96,14 @@ public class SubjectThreadState implements ThreadState {
             //try just in case the constructor didn't find one at the time:
             securityManager = ThreadContext.getSecurityManager();
         }
+        // 保留之前资源
         this.originalResources = ThreadContext.getResources();
+        // 清空所有资源
         ThreadContext.remove();
-
+        // 绑定主体
         ThreadContext.bind(this.subject);
         if (securityManager != null) {
+            // 绑定安全管理器
             ThreadContext.bind(securityManager);
         }
     }
@@ -105,6 +112,9 @@ public class SubjectThreadState implements ThreadState {
      * {@link ThreadContext#remove Remove}s all thread-state that was bound by this instance.  If any previous
      * thread-bound resources existed prior to the {@link #bind bind} call, they are restored back to the
      * {@code ThreadContext} to ensure the thread state is exactly as it was before binding.
+     */
+    /**
+     * 重置之前资源
      */
     public void restore() {
         ThreadContext.remove();

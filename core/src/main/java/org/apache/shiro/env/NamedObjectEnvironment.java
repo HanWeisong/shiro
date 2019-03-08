@@ -23,6 +23,10 @@ package org.apache.shiro.env;
  *
  * @since 1.2
  */
+
+/**
+ * 拥有名字的环境接口
+ */
 public interface NamedObjectEnvironment extends Environment {
 
     /**

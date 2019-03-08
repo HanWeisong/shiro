@@ -46,6 +46,7 @@ import javax.servlet.ServletResponse;
  *
  * @since 1.2
  */
+// 没有会话创建过滤器
 public class NoSessionCreationFilter extends PathMatchingFilter {
 
     @Override

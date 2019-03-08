@@ -29,6 +29,9 @@ package org.apache.shiro.authz.permission;
  *
  * @since 1.0
  */
+/**
+ * 需要提供角色权限解析器接口
+ */
 public interface RolePermissionResolverAware {
 
     /**

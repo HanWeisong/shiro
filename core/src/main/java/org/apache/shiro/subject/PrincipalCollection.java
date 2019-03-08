@@ -37,6 +37,10 @@ import java.util.Set;
  * @see #getRealmNames()
  * @since 0.9
  */
+
+/**
+ * 主体集合
+ */
 public interface PrincipalCollection extends Iterable, Serializable {
 
     /**
@@ -74,6 +78,10 @@ public interface PrincipalCollection extends Iterable, Serializable {
      * @return the primary principal used to uniquely identify the owning account/Subject
      * @since 1.0
      */
+    /**
+     * 获取主体
+     * @return
+     */
     Object getPrimaryPrincipal();
 
     /**
@@ -84,6 +92,12 @@ public interface PrincipalCollection extends Iterable, Serializable {
      *
      * @param type the type of the principal that should be returned.
      * @return a principal of the specified type or {@code null} if there isn't one of the specified type.
+     */
+    /**
+     * 返回指定类型中第一个发现的可分配主体，如果没有指定类型，则返回null
+     * @param type
+     * @param <T>
+     * @return
      */
     <T> T oneByType(Class<T> type);
 
@@ -96,6 +110,12 @@ public interface PrincipalCollection extends Iterable, Serializable {
      * @param type the type of the principals that should be returned.
      * @return a Collection of principals that are assignable from the specified type, or
      *         an empty Collection if no principals of this type are associated.
+     */
+    /**
+     * 返回可从指定类型分配的所有主体，如果不包含该*类型的主体，则返回空集合
+     * @param type
+     * @param <T>
+     * @return
      */
     <T> Collection<T> byType(Class<T> type);
 
@@ -129,12 +149,21 @@ public interface PrincipalCollection extends Iterable, Serializable {
      * @return the Subject's principals from the specified Realm only as a Collection or an empty Collection if there
      *         are not any principals from that realm.
      */
+    /**
+     * 返回从指定的Realm <em>仅作为Collection </ em>检索的单个Subject的主体，如果没有来自该领域的任何主体，则返回空* Collection
+     * @param realmName
+     * @return
+     */
     Collection fromRealm(String realmName);
 
     /**
      * Returns the realm names that this collection has principals for.
      *
      * @return the names of realms that this collection has one or more principals for.
+     */
+    /**
+     * 返回此集合具有主体的域名
+     * @return
      */
     Set<String> getRealmNames();
 

@@ -45,6 +45,10 @@ import java.util.Collections;
  *
  * @since 0.2
  */
+
+/**
+ * 使用缓存管理器的缓存能力缓存session
+ */
 public abstract class CachingSessionDAO extends AbstractSessionDAO implements CacheManagerAware {
 
     /**
@@ -59,6 +63,9 @@ public abstract class CachingSessionDAO extends AbstractSessionDAO implements Ca
 
     /**
      * The Cache instance responsible for caching Sessions.
+     */
+    /**
+     * Cache实例负责缓存Session
      */
     private Cache<Serializable, Session> activeSessions;
 
@@ -169,6 +176,7 @@ public abstract class CachingSessionDAO extends AbstractSessionDAO implements Ca
         CacheManager mgr = getCacheManager();
         if (mgr != null) {
             String name = getActiveSessionsCacheName();
+            // 缓存cache不存在，创建cache
             cache = mgr.getCache(name);
         }
         return cache;
@@ -181,7 +189,9 @@ public abstract class CachingSessionDAO extends AbstractSessionDAO implements Ca
      * @param session Session object to create in the EIS and then cache.
      */
     public Serializable create(Session session) {
+        // 创建 session
         Serializable sessionId = super.create(session);
+        // 缓存 session
         cache(session, sessionId);
         return sessionId;
     }

@@ -40,6 +40,10 @@ import java.util.Date;
  *
  * @since 0.1
  */
+
+/**
+ * 委派session 通过session管理器获取sessionkey的session信息
+ */
 public class DelegatingSession implements Session, Serializable {
 
     //TODO - complete JavaDoc
@@ -52,6 +56,9 @@ public class DelegatingSession implements Session, Serializable {
 
     /**
      * Handle to the target NativeSessionManager that will support the delegate calls.
+     */
+    /**
+     * 通过session管理器来支持session的常见方法
      */
     private final transient NativeSessionManager sessionManager;
 

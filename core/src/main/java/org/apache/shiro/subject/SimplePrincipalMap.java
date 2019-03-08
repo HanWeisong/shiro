@@ -30,6 +30,10 @@ import java.util.*;
  * @author Les Hazlewood
  * @since 1.2
  */
+
+/**
+ * 简单主体集合
+ */
 public class SimplePrincipalMap implements PrincipalMap {
 
     //Key: realm name, Value: map of principals specific to that realm
@@ -123,6 +127,12 @@ public class SimplePrincipalMap implements PrincipalMap {
                 null;
     }
 
+    /**
+     * 返回匹配的第一个对象
+     * @param type
+     * @param <T>
+     * @return
+     */
     public <T> T oneByType(Class<T> type) {
         if (CollectionUtils.isEmpty(this.combinedPrincipals)) {
             return null;
@@ -135,6 +145,12 @@ public class SimplePrincipalMap implements PrincipalMap {
         return null;
     }
 
+    /**
+     * 返回匹配的所有对象
+     * @param type
+     * @param <T>
+     * @return
+     */
     public <T> Collection<T> byType(Class<T> type) {
         if (CollectionUtils.isEmpty(this.combinedPrincipals)) {
             return Collections.emptySet();

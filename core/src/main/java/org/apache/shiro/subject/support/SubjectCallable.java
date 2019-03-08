@@ -59,7 +59,11 @@ import java.util.concurrent.Callable;
  */
 public class SubjectCallable<V> implements Callable<V> {
 
+    /**
+     * 线程状态接口
+     */
     protected final ThreadState threadState;
+    // 可调用对象
     private final Callable<V> callable;
 
     public SubjectCallable(Subject subject, Callable<V> delegate) {
@@ -79,9 +83,12 @@ public class SubjectCallable<V> implements Callable<V> {
 
     public V call() throws Exception {
         try {
+            // 保存线程主体和安全管理器
             threadState.bind();
+            // 执行调用
             return doCall(this.callable);
         } finally {
+            // 重置状态资源
             threadState.restore();
         }
     }

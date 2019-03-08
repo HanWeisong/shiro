@@ -42,12 +42,18 @@ import java.util.Date;
  *
  * @since 1.0
  */
+
+/**
+ * 增加事件通知、session监听的触发的session管理器
+ */
 public abstract class AbstractNativeSessionManager extends AbstractSessionManager implements NativeSessionManager, EventBusAware {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractSessionManager.class);
 
+    // 事件总线
     private EventBus eventBus;
 
+    // session监听者集合
     private Collection<SessionListener> listeners;
 
     public AbstractNativeSessionManager() {
@@ -89,18 +95,32 @@ public abstract class AbstractNativeSessionManager extends AbstractSessionManage
      * @param event the event to publish on the event bus if the event bus exists.
      * @since 1.3
      */
+    /**
+     * 发布事件
+     * @param event
+     */
     protected void publishEvent(Object event) {
         if (this.eventBus != null) {
             this.eventBus.publish(event);
         }
     }
 
+    /**
+     * 开始session
+     * @param context
+     * @return
+     */
     public Session start(SessionContext context) {
+        // 创建session（生成sessionId 存储session）
         Session session = createSession(context);
+        // 设置全局session过期时间（更新存储的session）
         applyGlobalSessionTimeout(session);
+        // 开始session
         onStart(session, context);
+        // 发送开始通知
         notifyStart(session);
         //Don't expose the EIS-tier Session object to the client-tier:
+        // 创建暴露的session DelegatingSession(session管理器提供的session接口)
         return createExposedSession(session, context);
     }
 
@@ -122,6 +142,7 @@ public abstract class AbstractNativeSessionManager extends AbstractSessionManage
 
     protected void applyGlobalSessionTimeout(Session session) {
         session.setTimeout(getGlobalSessionTimeout());
+        // 通知
         onChange(session);
     }
 
@@ -145,6 +166,7 @@ public abstract class AbstractNativeSessionManager extends AbstractSessionManage
         if (key == null) {
             throw new NullPointerException("SessionKey argument cannot be null.");
         }
+        // 查找session
         return doGetSession(key);
     }
 

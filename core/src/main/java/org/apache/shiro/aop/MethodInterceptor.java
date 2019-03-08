@@ -26,6 +26,10 @@ package org.apache.shiro.aop;
  *
  * @since 0.2
  */
+
+/**
+ * 方法拦截器接口，增加MethodInvocation实例执行之前或之后的逻辑
+ */
 public interface MethodInterceptor {
 
     /**
@@ -35,6 +39,12 @@ public interface MethodInterceptor {
      * @param methodInvocation the <code>MethodInvocation</code> to execute.
      * @return the result of the invocation
      * @throws Throwable if the method invocation throws a Throwable or if an error occurs in pre/post/finally advice.
+     */
+    /**
+     * 执行给定的方法调用对象，增加给定方法的前、后增强
+     * @param methodInvocation
+     * @return
+     * @throws Throwable
      */
     Object invoke(MethodInvocation methodInvocation) throws Throwable;
 

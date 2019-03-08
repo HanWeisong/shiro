@@ -47,6 +47,10 @@ import org.apache.shiro.authz.Permission;
  * @see PermissionResolverAware PermissionResolverAware
  * @since 0.9
  */
+
+/**
+ * 权限解析器接口
+ */
 public interface PermissionResolver {
 
     /**
@@ -56,6 +60,11 @@ public interface PermissionResolver {
      * @return A Permission object that can be used internally to determine a subject's permissions.
      * @throws InvalidPermissionStringException
      *          if the permission string is not valid for this resolver.
+     */
+    /**
+     * 根据给定的String表示形式解析权限
+     * @param permissionString
+     * @return
      */
     Permission resolvePermission(String permissionString);
 

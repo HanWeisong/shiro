@@ -30,6 +30,10 @@ import java.util.Collection;
  * component allows an application to resolve the roles into permissions.
  *
  */
+
+/**
+ * 角色权限解析器接口
+ */
 public interface RolePermissionResolver {
 
     /**
@@ -37,6 +41,11 @@ public interface RolePermissionResolver {
      *
      * @param roleString the String representation of a role name to resolve.
      * @return a Collection of Permissions based on the given String representation.
+     */
+    /**
+     * 根据给定的角色String表示形式解析权限集合
+     * @param roleString
+     * @return
      */
     Collection<Permission> resolvePermissionsInRole(String roleString);
 

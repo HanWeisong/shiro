@@ -36,6 +36,10 @@ import java.util.Collection;
  *
  * @since 0.9
  */
+
+/**
+ * 支持多个real的安全管理器抽象类
+ */
 public abstract class RealmSecurityManager extends CachingSecurityManager {
 
     /**
@@ -109,6 +113,9 @@ public abstract class RealmSecurityManager extends CachingSecurityManager {
      * {@link #setRealms setRealms} methods to allow these newly available realms to be given the cache manager
      * already in use.
      */
+    /**
+     * 设置缓存管理器到多个realm对象
+     */
     protected void applyCacheManagerToRealms() {
         CacheManager cacheManager = getCacheManager();
         Collection<Realm> realms = getRealms();
@@ -134,6 +141,9 @@ public abstract class RealmSecurityManager extends CachingSecurityManager {
      * already in use.
      *
      * @since 1.3
+     */
+    /**
+     * 设置eventBus到多个realm
      */
     protected void applyEventBusToRealms() {
         EventBus eventBus = getEventBus();

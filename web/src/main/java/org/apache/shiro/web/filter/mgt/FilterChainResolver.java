@@ -34,6 +34,10 @@ import javax.servlet.ServletResponse;
  *
  * @since 1.0
  */
+
+/**
+ * FilterChain解析器
+ */
 public interface FilterChainResolver {
 
     /**

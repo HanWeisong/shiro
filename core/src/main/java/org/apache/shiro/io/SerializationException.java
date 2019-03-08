@@ -26,6 +26,10 @@ import org.apache.shiro.ShiroException;
  *
  * @since Apr 23, 2008 8:58:22 AM
  */
+
+/**
+ * 序列化实现类
+ */
 public class SerializationException extends ShiroException
 {
 

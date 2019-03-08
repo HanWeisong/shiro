@@ -39,6 +39,10 @@ import java.util.Collection;
  *
  * @since 0.1
  */
+
+/**
+ * session dao 接口
+ */
 public interface SessionDAO {
 
     /**
@@ -58,6 +62,11 @@ public interface SessionDAO {
      * @param session the {@link org.apache.shiro.session.Session} object to create in the EIS.
      * @return the EIS id (e.g. primary key) of the created {@code Session} object.
      */
+    /**
+     * insert
+     * @param session
+     * @return
+     */
     Serializable create(Session session);
 
     /**
@@ -69,6 +78,12 @@ public interface SessionDAO {
      * @return the persisted session in the EIS identified by {@code sessionId}.
      * @throws UnknownSessionException if there is no EIS record for any session with the
      *                                 specified {@code sessionId}
+     */
+    /**
+     * 从指定的唯一标识的EIS中检索会话
+     * @param sessionId
+     * @return
+     * @throws UnknownSessionException
      */
     Session readSession(Serializable sessionId) throws UnknownSessionException;
 

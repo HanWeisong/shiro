@@ -25,6 +25,10 @@ package org.apache.shiro.session;
  *
  * @since 0.1
  */
+
+/**
+ * 未知的session异常
+ */
 public class UnknownSessionException extends InvalidSessionException {
 
     /**

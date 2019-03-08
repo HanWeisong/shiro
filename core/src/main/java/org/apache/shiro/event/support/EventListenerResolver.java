@@ -37,6 +37,10 @@ import java.util.List;
  * @see SingleArgumentMethodEventListener
  * @since 1.3
  */
+
+/**
+ * 事件监听器解析器
+ */
 public interface EventListenerResolver {
 
     /**
@@ -45,6 +49,11 @@ public interface EventListenerResolver {
      *
      * @param instance the subscriber instance for which EventListener instances should be acquired.
      * @return {@link EventListener} instances as a result of inspecting a subscriber object.
+     */
+    /**
+     * 获得监听列表
+     * @param instance
+     * @return
      */
     List<EventListener> getEventListeners(Object instance);
 }

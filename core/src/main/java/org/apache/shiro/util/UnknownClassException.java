@@ -27,6 +27,10 @@ import org.apache.shiro.ShiroException;
  *
  * @since 0.1
  */
+
+/**
+ * 未知类异常
+ */
 public class UnknownClassException extends ShiroException
 {
 

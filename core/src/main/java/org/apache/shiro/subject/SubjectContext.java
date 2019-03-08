@@ -56,6 +56,10 @@ import java.util.Map;
  * @see org.apache.shiro.mgt.SubjectFactory SubjectFactory
  * @since 1.0
  */
+
+/**
+ * Subject上下文接口
+ */
 public interface SubjectContext extends Map<String, Object> {
 
     /**

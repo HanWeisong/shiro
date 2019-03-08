@@ -31,6 +31,10 @@ import org.apache.shiro.subject.support.DelegatingSubject;
  *
  * @since 1.0
  */
+
+/**
+ * Subject工厂模式实现类
+ */
 public class DefaultSubjectFactory implements SubjectFactory {
 
     public DefaultSubjectFactory() {

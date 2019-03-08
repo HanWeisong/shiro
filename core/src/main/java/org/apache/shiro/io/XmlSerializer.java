@@ -35,6 +35,10 @@ import java.io.ByteArrayOutputStream;
  * 
  * @since 0.9
  */
+
+/**
+ * xml序列化实现类
+ */
 public class XmlSerializer implements Serializer {
 
     /**

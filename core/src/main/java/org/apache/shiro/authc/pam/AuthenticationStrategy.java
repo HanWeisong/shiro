@@ -39,6 +39,10 @@ import java.util.Collection;
  * @see FirstSuccessfulStrategy
  * @since 0.2
  */
+
+/**
+ * 认证策略接口
+ */
 public interface AuthenticationStrategy {
 
     /**

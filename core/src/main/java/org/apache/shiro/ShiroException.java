@@ -26,6 +26,10 @@ package org.apache.shiro;
  *
  * @since 0.1
  */
+
+/**
+ * Shiro顶级异常
+ */
 public class ShiroException extends RuntimeException {
 
     /**

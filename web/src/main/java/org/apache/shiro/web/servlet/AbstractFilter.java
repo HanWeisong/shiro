@@ -26,56 +26,26 @@ import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 
-/**
- * Base abstract Filter simplifying Filter initialization and {@link #getInitParam(String) access} to init parameters.
- * Subclass initialization logic should be performed by overriding the {@link #onFilterConfigSet()} template method.
- * FilterChain execution logic (the
- * {@link #doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)} method
- * is left to subclasses.
- *
- * @since 1.0
- */
+// 基本抽象过滤器简化初始化过程，简化子类 getInitParam 的过程，doFilter() 交由子类实现
 public abstract class AbstractFilter extends ServletContextSupport implements Filter {
 
     private static transient final Logger log = LoggerFactory.getLogger(AbstractFilter.class);
 
-    /**
-     * FilterConfig provided by the Servlet container at start-up.
-     */
+    // Servlet容器提供的 过滤器配置
     protected FilterConfig filterConfig;
 
-    /**
-     * Returns the servlet container specified {@code FilterConfig} instance provided at
-     * {@link #init(javax.servlet.FilterConfig) startup}.
-     *
-     * @return the servlet container specified {@code FilterConfig} instance provided at start-up.
-     */
+    // 返回被设置的过滤器配置
     public FilterConfig getFilterConfig() {
         return filterConfig;
     }
 
-    /**
-     * Sets the FilterConfig <em>and</em> the {@code ServletContext} as attributes of this class for use by
-     * subclasses.  That is:
-     * <pre>
-     * this.filterConfig = filterConfig;
-     * setServletContext(filterConfig.getServletContext());</pre>
-     *
-     * @param filterConfig the FilterConfig instance provided by the Servlet container at start-up.
-     */
+    // 设置过滤器配置，同时设置父类的Servlet上下文配置信息
     public void setFilterConfig(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         setServletContext(filterConfig.getServletContext());
     }
 
-    /**
-     * Returns the value for the named {@code init-param}, or {@code null} if there was no {@code init-param}
-     * specified by that name.
-     *
-     * @param paramName the name of the {@code init-param}
-     * @return the value for the named {@code init-param}, or {@code null} if there was no {@code init-param}
-     *         specified by that name.
-     */
+    // 获取过滤器配置信息的参数值
     protected String getInitParam(String paramName) {
         FilterConfig config = getFilterConfig();
         if (config != null) {
@@ -84,13 +54,7 @@ public abstract class AbstractFilter extends ServletContextSupport implements Fi
         return null;
     }
 
-    /**
-     * Sets the filter's {@link #setFilterConfig filterConfig} and then immediately calls
-     * {@link #onFilterConfigSet() onFilterConfigSet()} to trigger any processing a subclass might wish to perform.
-     *
-     * @param filterConfig the servlet container supplied FilterConfig instance.
-     * @throws javax.servlet.ServletException if {@link #onFilterConfigSet() onFilterConfigSet()} throws an Exception.
-     */
+    // 初始化过滤器 1.设置过滤器配置信息 2.执行子类覆盖的 onFilterConfigSet
     public final void init(FilterConfig filterConfig) throws ServletException {
         setFilterConfig(filterConfig);
         try {
@@ -107,23 +71,11 @@ public abstract class AbstractFilter extends ServletContextSupport implements Fi
         }
     }
 
-    /**
-     * Template method to be overridden by subclasses to perform initialization logic at start-up.  The
-     * {@code ServletContext} and {@code FilterConfig} will be accessible
-     * (and non-{@code null}) at the time this method is invoked via the
-     * {@link #getServletContext() getServletContext()} and {@link #getFilterConfig() getFilterConfig()}
-     * methods respectively.
-     * <p/>
-     * {@code init-param} values may be conveniently obtained via the {@link #getInitParam(String)} method.
-     *
-     * @throws Exception if the subclass has an error upon initialization.
-     */
+    // 模板方法，需子类覆盖重写内部逻辑
     protected void onFilterConfigSet() throws Exception {
     }
 
-    /**
-     * Default no-op implementation that can be overridden by subclasses for custom cleanup behavior.
-     */
+    // 过滤器销毁逻辑，子类覆盖实现自由清除逻辑
     public void destroy() {
     }
 

@@ -31,6 +31,10 @@ import java.util.Random;
  *
  * @since 1.0
  */
+
+/**
+ * 随机生成 long sessionId
+ */
 public class RandomSessionIdGenerator implements SessionIdGenerator {
 
     private static final Logger log = LoggerFactory.getLogger(RandomSessionIdGenerator.class);

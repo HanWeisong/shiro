@@ -45,6 +45,10 @@ import org.apache.shiro.subject.Subject;
  * @see DefaultSessionStorageEvaluator
  * @since 1.2
  */
+
+/**
+ * session存储评估器
+ */
 public interface SessionStorageEvaluator {
 
     /**
@@ -58,6 +62,11 @@ public interface SessionStorageEvaluator {
      *         state, {@code false} otherwise.
      * @see Subject#getSession()
      * @see Subject#getSession(boolean)
+     */
+    /**
+     * 是否开启session存储
+     * @param subject
+     * @return
      */
     boolean isSessionStorageEnabled(Subject subject);
 

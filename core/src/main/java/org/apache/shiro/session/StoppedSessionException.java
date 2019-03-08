@@ -25,6 +25,10 @@ package org.apache.shiro.session;
  *
  * @since 0.1
  */
+
+/**
+ * 停止session异常
+ */
 public class StoppedSessionException extends InvalidSessionException {
 
     /**

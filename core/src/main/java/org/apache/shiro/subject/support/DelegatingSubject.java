@@ -68,6 +68,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @since 0.1
  */
+
+/**
+ * 委托主题
+ */
 public class DelegatingSubject implements Subject {
 
     private static final Logger log = LoggerFactory.getLogger(DelegatingSubject.class);
@@ -84,6 +88,9 @@ public class DelegatingSubject implements Subject {
      */
     protected boolean sessionCreationEnabled;
 
+    /**
+     * 安全管理器
+     */
     protected transient SecurityManager securityManager;
 
     public DelegatingSubject(SecurityManager securityManager) {
@@ -251,8 +258,16 @@ public class DelegatingSubject implements Subject {
         securityManager.checkRoles(getPrincipals(), roles);
     }
 
+    /**
+     * 主题登录
+     * @param token the token encapsulating the subject's principals and credentials to be passed to the
+     *              Authentication subsystem for verification.
+     * @throws AuthenticationException
+     */
     public void login(AuthenticationToken token) throws AuthenticationException {
+        // 清空内部runAs身份
         clearRunAsIdentitiesInternal();
+        // 使用安全管理器执行登录流程
         Subject subject = securityManager.login(this, token);
 
         PrincipalCollection principals;
@@ -334,12 +349,14 @@ public class DelegatingSubject implements Subject {
             log.trace("Starting session for host {}", getHost());
             SessionContext sessionContext = createSessionContext();
             Session session = this.securityManager.start(sessionContext);
+            // 装饰，增加stop session 功能
             this.session = decorate(session);
         }
         return this.session;
     }
 
     protected SessionContext createSessionContext() {
+        // 创建默认session上下文实例
         SessionContext sessionContext = new DefaultSessionContext();
         if (StringUtils.hasText(host)) {
             sessionContext.setHost(host);

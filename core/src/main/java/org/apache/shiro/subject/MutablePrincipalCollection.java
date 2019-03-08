@@ -26,6 +26,10 @@ import java.util.Collection;
  *
  * @since 0.9
  */
+
+/**
+ * 可变的主体集合接口
+ */
 public interface MutablePrincipalCollection extends PrincipalCollection {
 
     /**

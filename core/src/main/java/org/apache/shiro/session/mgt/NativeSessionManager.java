@@ -27,6 +27,10 @@ import java.util.Date;
  *
  * @since 1.0
  */
+
+/**
+ * 原生session管理器
+ */
 public interface NativeSessionManager extends SessionManager {
 
     /**
@@ -35,6 +39,11 @@ public interface NativeSessionManager extends SessionManager {
      * @param key the session key to use to look up the target session.
      * @return the time the specified {@code Session} started (was created).
      * @see org.apache.shiro.session.Session#getStartTimestamp()
+     */
+    /**
+     * 获取session开始时间
+     * @param key
+     * @return
      */
     Date getStartTimestamp(SessionKey key);
 
@@ -46,6 +55,11 @@ public interface NativeSessionManager extends SessionManager {
      * @see org.apache.shiro.session.Session#getLastAccessTime()
      * @see org.apache.shiro.session.Session#touch()
      */
+    /**
+     * 获取最后访问的时间
+     * @param key
+     * @return
+     */
     Date getLastAccessTime(SessionKey key);
 
     /**
@@ -54,6 +68,11 @@ public interface NativeSessionManager extends SessionManager {
      *
      * @param key the session key to use to look up the target session.
      * @return {@code true} if the session is valid (exists and is not stopped or expired), {@code false} otherwise.
+     */
+    /**
+     * 验证session存储，并且没有停止和没过期
+     * @param key
+     * @return
      */
     boolean isValid(SessionKey key);
 
@@ -66,6 +85,11 @@ public interface NativeSessionManager extends SessionManager {
      * @param key the session key to use to look up the target session.
      * @throws org.apache.shiro.session.InvalidSessionException
      *          if the session id is invalid (it does not exist or it is stopped or expired).
+     */
+    /**
+     * 校验session
+     * @param key
+     * @throws InvalidSessionException
      */
     void checkValid(SessionKey key) throws InvalidSessionException;
 
@@ -81,6 +105,12 @@ public interface NativeSessionManager extends SessionManager {
      * @return the time in milliseconds that the associated session may remain idle before expiring.
      * @throws org.apache.shiro.session.InvalidSessionException
      *          if the session has been stopped or expired prior to calling this method.
+     */
+    /**
+     * 获取session过期时间
+     * @param key
+     * @return
+     * @throws InvalidSessionException
      */
     long getTimeout(SessionKey key) throws InvalidSessionException;
 
@@ -126,6 +156,11 @@ public interface NativeSessionManager extends SessionManager {
      * @param key the session key to use to look up the target session.
      * @throws InvalidSessionException if the session has stopped or expired prior to calling this method.
      * @see org.apache.shiro.session.Session#stop
+     */
+    /**
+     * 停止session
+     * @param key
+     * @throws InvalidSessionException
      */
     void stop(SessionKey key) throws InvalidSessionException;
 

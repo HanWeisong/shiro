@@ -24,6 +24,10 @@ import java.io.Serializable;
  *
  * @since 1.0
  */
+
+/**
+ * 默认的sessionKey实现
+ */
 public class DefaultSessionKey implements SessionKey, Serializable {
 
     private Serializable sessionId;

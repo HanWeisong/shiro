@@ -25,6 +25,10 @@ import java.lang.annotation.Annotation;
  *
  * @since 1.1
  */
+
+/**
+ * 注解解析器接口，获取被拦截方法的指定注解实例
+ */
 public interface AnnotationResolver {
 
     /**
@@ -37,6 +41,12 @@ public interface AnnotationResolver {
      * @param clazz the annotation class of the annotation to find.
      * @return the method's annotation of the specified type or {@code null} if no annotation of
      *         that type could be found.
+     */
+    /**
+     * 返回一个明确的给定注解类的注解实例，如果给定的被拦截的方法不存在指定的注解
+     * @param mi    被拦截执行的方法
+     * @param clazz 给定的要查找的注解类Class
+     * @return
      */
     Annotation getAnnotation(MethodInvocation mi, Class<? extends Annotation> clazz);
 }

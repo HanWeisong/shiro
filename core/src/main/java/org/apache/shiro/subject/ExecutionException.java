@@ -29,6 +29,10 @@ import org.apache.shiro.ShiroException;
  *
  * @since 1.0
  */
+
+/**
+ * 执行异常类
+ */
 public class ExecutionException extends ShiroException {
 
     public ExecutionException(Throwable cause) {

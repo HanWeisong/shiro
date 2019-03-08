@@ -18,10 +18,10 @@
  */
 package org.apache.shiro.aop;
 
-import java.lang.annotation.Annotation;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+
+import java.lang.annotation.Annotation;
 
 
 /**
@@ -29,10 +29,17 @@ import org.apache.shiro.subject.Subject;
  *
  * @since 0.9.0
  */
+
+/**
+ * 注解处理器
+ */
 public abstract class AnnotationHandler {
 
     /**
      * The type of annotation this handler will process.
+     */
+    /**
+     * 将被处理的注解类类型
      */
     protected Class<? extends Annotation> annotationClass;
 
@@ -41,6 +48,10 @@ public abstract class AnnotationHandler {
      * specified type.  Immediately calls {@link #setAnnotationClass(Class)}.
      *
      * @param annotationClass the type of annotation this handler will process.
+     */
+    /**
+     * 构造方法
+     * @param annotationClass
      */
     public AnnotationHandler(Class<? extends Annotation> annotationClass) {
         setAnnotationClass(annotationClass);
@@ -53,6 +64,11 @@ public abstract class AnnotationHandler {
      *
      * @return the {@link org.apache.shiro.subject.Subject Subject} associated with the currently-executing code.
      */
+
+    /**
+     * 获取当前线程的主题对象
+     * @return
+     */
     protected Subject getSubject() {
         return SecurityUtils.getSubject();
     }
@@ -62,6 +78,11 @@ public abstract class AnnotationHandler {
      *
      * @param annotationClass the type of annotation this handler will process.
      * @throws IllegalArgumentException if the argument is <code>null</code>.
+     */
+    /**
+     * 设置注解类
+     * @param annotationClass
+     * @throws IllegalArgumentException
      */
     protected void setAnnotationClass(Class<? extends Annotation> annotationClass)
             throws IllegalArgumentException {
@@ -76,6 +97,10 @@ public abstract class AnnotationHandler {
      * Returns the type of annotation this handler inspects and processes.
      *
      * @return the type of annotation this handler inspects and processes.
+     */
+    /**
+     * 获取注解类
+     * @return
      */
     public Class<? extends Annotation> getAnnotationClass() {
         return this.annotationClass;

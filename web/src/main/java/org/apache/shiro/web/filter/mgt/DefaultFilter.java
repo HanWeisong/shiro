@@ -35,18 +35,33 @@ import java.util.Map;
  *
  * @since 1.0
  */
+
+/**
+ * Shiro提供的过滤器枚举类
+ */
 public enum DefaultFilter {
 
+    // 通用过滤器，允许任何请求访问
     anon(AnonymousFilter.class),
+    // 表单认证过滤器
     authc(FormAuthenticationFilter.class),
+    // 基于 Http 请求的认证过滤器
     authcBasic(BasicHttpAuthenticationFilter.class),
+    // 登出过滤器
     logout(LogoutFilter.class),
+    // 不创建 session 过滤器
     noSessionCreation(NoSessionCreationFilter.class),
+    // 权限认证过滤器
     perms(PermissionsAuthorizationFilter.class),
+    // 端口过滤器
     port(PortFilter.class),
+    // 请求处理为权限的一种过滤器
     rest(HttpMethodPermissionFilter.class),
+    // 角色过滤器
     roles(RolesAuthorizationFilter.class),
+    // SSL 过滤器
     ssl(SslFilter.class),
+    // 用户过滤器，检测用户是否登录
     user(UserFilter.class);
 
     private final Class<? extends Filter> filterClass;

@@ -18,9 +18,9 @@
  */
 package org.apache.shiro.authz.permission;
 
-import java.io.Serializable;
-
 import org.apache.shiro.authz.Permission;
+
+import java.io.Serializable;
 
 
 /**
@@ -32,6 +32,10 @@ import org.apache.shiro.authz.Permission;
  * is typically only assigned only to "root" or "administrator" users or roles.
  *
  * @since 0.1
+ */
+
+/**
+ * 支持所有的权限的权限
  */
 public class AllPermission implements Permission, Serializable {
 

@@ -49,6 +49,10 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @since 1.0
  */
+
+/**
+ * 测试用的示例，正式环境应该提供企业级的缓存能力的实现
+ */
 public class EnterpriseCacheSessionDAO extends CachingSessionDAO {
 
     public EnterpriseCacheSessionDAO() {

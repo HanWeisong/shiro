@@ -24,12 +24,20 @@ package org.apache.shiro.session;
  *
  * @since 0.9
  */
+
+/**
+ * session监听器
+ */
 public interface SessionListener {
 
     /**
      * Notification callback that occurs when the corresponding Session has started.
      *
      * @param session the session that has started.
+     */
+    /**
+     * 监听开始事件
+     * @param session
      */
     void onStart(Session session);
 
@@ -38,6 +46,10 @@ public interface SessionListener {
      * {@link Session#stop} or automatically upon a subject logging out.
      *
      * @param session the session that has stopped.
+     */
+    /**
+     * 监听停止事件
+     * @param session
      */
     void onStop(Session session);
 
@@ -54,6 +66,10 @@ public interface SessionListener {
      * when this method is called.
      *
      * @param session the session that has expired.
+     */
+    /**
+     * 监听session过期事件
+     * @param session
      */
     void onExpiration(Session session);
 }

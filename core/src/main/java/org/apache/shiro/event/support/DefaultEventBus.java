@@ -98,6 +98,7 @@ public class DefaultEventBus implements EventBus {
     //and the lock provides thread-safety in probably a much simpler mechanism than attempting to write a
     //EventBus-specific Comparator.  This technique is also likely to be faster than a ConcurrentSkipListMap, which
     //is about 3-5 times slower than a standard ConcurrentMap.
+    // 注册中心，对象和监听列表对
     private final Map<Object, Subscription> registry;
     private final Lock registryReadLock;
     private final Lock registryWriteLock;
@@ -118,6 +119,10 @@ public class DefaultEventBus implements EventBus {
         this.eventListenerResolver = eventListenerResolver;
     }
 
+    /**
+     * 发布事件
+     * @param event The event object to distribute to relevant subscribers.
+     */
     public void publish(Object event) {
         if (event == null) {
             log.info("Received null event for publishing.  Ignoring and returning.");
@@ -139,6 +144,7 @@ public class DefaultEventBus implements EventBus {
             //Finally, the read lock is re-entrant, so multiple publish calls will be
             //concurrent without penalty since publishing is a read-only operation on the registry.
 
+            // 发布事件给注册中心的注册对象的监听器列表
             for (Subscription subscription : this.registry.values()) {
                 subscription.onEvent(event);
             }
@@ -147,32 +153,45 @@ public class DefaultEventBus implements EventBus {
         }
     }
 
+    /**
+     * 注册对象到注册中心
+     * @param instance
+     */
     public void register(Object instance) {
         if (instance == null) {
             log.info("Received null instance for event listener registration.  Ignoring registration request.");
             return;
         }
 
+        // 注册到注册中心，先取消注册
         unregister(instance);
 
+        // 获取给定对象的监听器列表
         List<EventListener> listeners = getEventListenerResolver().getEventListeners(instance);
 
+        // 给定对象的监听器列表为空直接返回，输出警告，忽略注册请求
         if (listeners == null || listeners.isEmpty()) {
             log.warn("Unable to resolve event listeners for subscriber instance [{}]. Ignoring registration request.",
                     instance);
             return;
         }
 
+        // 构造给定对象的订阅器，存储对象的监听器列表
         Subscription subscription = new Subscription(listeners);
 
         this.registryWriteLock.lock();
         try {
+            // 存储到注册中心
             this.registry.put(instance, subscription);
         } finally {
             this.registryWriteLock.unlock();
         }
     }
 
+    /**
+     * 取消注册
+     * @param instance
+     */
     public void unregister(Object instance) {
         if (instance == null) {
             return;
@@ -189,12 +208,20 @@ public class DefaultEventBus implements EventBus {
 
         private final List<EventListener> listeners;
 
+        /**
+         * 订阅构造方法
+         * @param listeners
+         */
         public Subscription(List<EventListener> listeners) {
             List<EventListener> toSort = new ArrayList<EventListener>(listeners);
             Collections.sort(toSort, EVENT_LISTENER_COMPARATOR);
             this.listeners = toSort;
         }
 
+        /**
+         * 事件通知
+         * @param event
+         */
         public void onEvent(Object event) {
 
             Set<Object> delivered = new HashSet<Object>();

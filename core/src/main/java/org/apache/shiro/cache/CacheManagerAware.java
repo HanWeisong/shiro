@@ -27,6 +27,10 @@ package org.apache.shiro.cache;
  *
  * @since 0.9
  */
+
+/**
+ * 需要设置缓存管理器的接口
+ */
 public interface CacheManagerAware {
 
     /**

@@ -25,6 +25,10 @@ import org.apache.shiro.ShiroException;
  *
  * @since 0.2
  */
+
+/**
+ * 可初始化的接口
+ */
 public interface Initializable {
 
     /**

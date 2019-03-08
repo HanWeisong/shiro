@@ -18,14 +18,14 @@
  */
 package org.apache.shiro.session.mgt;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -41,11 +41,14 @@ public class ExecutorServiceSessionValidationScheduler implements SessionValidat
 
     /** Private internal log instance. */
     private static final Logger log = LoggerFactory.getLogger(ExecutorServiceSessionValidationScheduler.class);
-
+    // session管理器
     ValidatingSessionManager sessionManager;
     private ScheduledExecutorService service;
+    // 60 * 60 * 1000  ms
     private long interval = DefaultSessionManager.DEFAULT_SESSION_VALIDATION_INTERVAL;
+    // 已经开启
     private boolean enabled = false;
+    // 线程名前
     private String threadNamePrefix = "SessionValidationThread-";
 
     public ExecutorServiceSessionValidationScheduler() {
@@ -92,16 +95,20 @@ public class ExecutorServiceSessionValidationScheduler implements SessionValidat
     // (so we don't have to change the unit test execution model for the core module)
     public void enableSessionValidation() {
         if (this.interval > 0l) {
+            // 初始化预定的执行者服务 单线程
             this.service = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {  
 	            private final AtomicInteger count = new AtomicInteger(1);
 
 	            public Thread newThread(Runnable r) {  
-	                Thread thread = new Thread(r);  
-	                thread.setDaemon(true);  
+	                Thread thread = new Thread(r);
+	                // 守护线程
+	                thread.setDaemon(true);
+	                // 线程名称
 	                thread.setName(threadNamePrefix + count.getAndIncrement());
 	                return thread;  
 	            }  
-            });                  
+            });
+            // 设定执行速率、周期
             this.service.scheduleAtFixedRate(this, interval, interval, TimeUnit.MILLISECONDS);
         }
         this.enabled = true;
@@ -112,6 +119,7 @@ public class ExecutorServiceSessionValidationScheduler implements SessionValidat
             log.debug("Executing session validation...");
         }
         long startTime = System.currentTimeMillis();
+        // 校验session可用性
         this.sessionManager.validateSessions();
         long stopTime = System.currentTimeMillis();
         if (log.isDebugEnabled()) {
@@ -119,8 +127,12 @@ public class ExecutorServiceSessionValidationScheduler implements SessionValidat
         }
     }
 
+    /**
+     * 禁用session可用性
+     */
     public void disableSessionValidation() {
         if (this.service != null) {
+            // 服务shtdown
             this.service.shutdownNow();
         }
         this.enabled = false;

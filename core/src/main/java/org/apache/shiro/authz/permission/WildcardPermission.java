@@ -25,7 +25,6 @@ import org.apache.shiro.util.StringUtils;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -103,6 +102,10 @@ import java.util.Set;
  * above to help people get started and provide consistency in the Shiro community.
  *
  * @since 0.9
+ */
+
+/**
+ * 通配符权限类，提供进行通配符配置的权限解析
  */
 public class WildcardPermission implements Permission, Serializable {
 

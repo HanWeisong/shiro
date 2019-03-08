@@ -54,6 +54,7 @@ public abstract class AbstractValidatingSessionManager extends AbstractNativeSes
     /**
      * Scheduler used to validate sessions on a regular basis.
      */
+    // 调度程序用于定期验证会话
     protected SessionValidationScheduler sessionValidationScheduler;
 
     protected long sessionValidationInterval;
@@ -80,6 +81,9 @@ public abstract class AbstractValidatingSessionManager extends AbstractNativeSes
         return sessionValidationScheduler;
     }
 
+    /**
+     * 如果需求开启定时校验session执行程序
+     */
     private void enableSessionValidationIfNecessary() {
         SessionValidationScheduler scheduler = getSessionValidationScheduler();
         if (isSessionValidationSchedulerEnabled() && (scheduler == null || !scheduler.isEnabled())) {
@@ -111,12 +115,14 @@ public abstract class AbstractValidatingSessionManager extends AbstractNativeSes
 
     @Override
     protected final Session doGetSession(final SessionKey key) throws InvalidSessionException {
+        // 开起定期执行校验程序
         enableSessionValidationIfNecessary();
 
         log.trace("Attempting to retrieve session with key {}", key);
-
+        // 索引session
         Session s = retrieveSession(key);
         if (s != null) {
+            // 校验session
             validate(s, key);
         }
         return s;
@@ -129,6 +135,12 @@ public abstract class AbstractValidatingSessionManager extends AbstractNativeSes
      * @return the session identified by {@code sessionId}.
      * @throws UnknownSessionException if there is no session identified by {@code sessionId}.
      */
+    /**
+     * 根据指定的会话密钥从基础数据存储中查找会话
+     * @param key
+     * @return
+     * @throws UnknownSessionException
+     */
     protected abstract Session retrieveSession(SessionKey key) throws UnknownSessionException;
 
     protected Session createSession(SessionContext context) throws AuthorizationException {
@@ -140,11 +152,14 @@ public abstract class AbstractValidatingSessionManager extends AbstractNativeSes
 
     protected void validate(Session session, SessionKey key) throws InvalidSessionException {
         try {
+            // 校验session
             doValidate(session);
         } catch (ExpiredSessionException ese) {
+            // 过期
             onExpiration(session, ese, key);
             throw ese;
         } catch (InvalidSessionException ise) {
+            // 不可用
             onInvalidation(session, ise, key);
             throw ise;
         }
@@ -270,6 +285,9 @@ public abstract class AbstractValidatingSessionManager extends AbstractNativeSes
     /**
      * @see ValidatingSessionManager#validateSessions()
      */
+    /**
+     * 校验session
+     */
     public void validateSessions() {
         if (log.isInfoEnabled()) {
             log.info("Validating all active sessions...");
@@ -277,8 +295,10 @@ public abstract class AbstractValidatingSessionManager extends AbstractNativeSes
 
         int invalidCount = 0;
 
+        // 获取所有激活的session
         Collection<Session> activeSessions = getActiveSessions();
 
+        // 遍历 校验
         if (activeSessions != null && !activeSessions.isEmpty()) {
             for (Session s : activeSessions) {
                 try {

@@ -20,29 +20,30 @@ package org.apache.shiro.web.servlet;
 
 import javax.servlet.ServletContext;
 
-/**
- * Base implementation for any components that need to access the web application's {@link ServletContext ServletContext}.
- *
- * @since 0.2
- */
+// ServletContext 的基本封装
 public class ServletContextSupport {
 
     //TODO - complete JavaDoc
+    // ServletContext对象
     private ServletContext servletContext = null;
 
+    // 获取 ServletContext
     public ServletContext getServletContext() {
         return servletContext;
     }
 
+    // 设置 ServletContext
     public void setServletContext(ServletContext servletContext) {
         this.servletContext = servletContext;
     }
 
     @SuppressWarnings({"UnusedDeclaration"})
+    // 获取 ServletContext 的参数
     protected String getContextInitParam(String paramName) {
         return getServletContext().getInitParameter(paramName);
     }
 
+    // 获取必须的 ServletContext 的对象，如为 null 则抛出异常
     private ServletContext getRequiredServletContext() {
         ServletContext servletContext = getServletContext();
         if (servletContext == null) {
@@ -53,6 +54,7 @@ public class ServletContextSupport {
     }
 
     @SuppressWarnings({"UnusedDeclaration"})
+    // 设置Servlet上下文参数，为null则清楚 key 不为空则保持 key 和 value 到上下文配置
     protected void setContextAttribute(String key, Object value) {
         if (value == null) {
             removeContextAttribute(key);
@@ -70,23 +72,13 @@ public class ServletContextSupport {
         getRequiredServletContext().removeAttribute(key);
     }
 
-    /**
-     * It is highly recommended not to override this method directly, and instead override the
-     * {@link #toStringBuilder() toStringBuilder()} method, a better-performing alternative.
-     *
-     * @return the String representation of this instance.
-     */
+    // 强烈建议不要直接覆盖此方法，而是覆盖* {@link #toStringBuilder（）toStringBuilder（）}方法，这是一种性能更佳的替代方法。
     @Override
     public String toString() {
         return toStringBuilder().toString();
     }
 
-    /**
-     * Same concept as {@link #toString() toString()}, but returns a {@link StringBuilder} instance instead.
-     *
-     * @return a StringBuilder instance to use for appending String data that will eventually be returned from a
-     *         {@code toString()} invocation.
-     */
+    // 与{@link #toString（）toString（）}相同的概念，但返回{@link StringBuilder}实例。 , * * @return一个StringBuilder实例，用于追加最终将从* {@code toString（）}调用返回的String数据
     protected StringBuilder toStringBuilder() {
         return new StringBuilder(super.toString());
     }

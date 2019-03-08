@@ -37,6 +37,10 @@ import org.apache.shiro.util.LifecycleUtils;
  *
  * @since 0.9
  */
+
+/**
+ * SecurityManager的基本抽象实现类，增加了缓存管理器，大多是抽象方法需要子类实现
+ */
 public abstract class CachingSecurityManager implements SecurityManager, Destroyable, CacheManagerAware, EventBusAware {
 
     /**

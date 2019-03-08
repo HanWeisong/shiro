@@ -31,9 +31,21 @@ import org.apache.shiro.session.Session;
  * 
  * @since 0.9
  */
+
+/**
+ * 拥有验证功能的session接口
+ */
 public interface ValidatingSession extends Session {
 
+    /**
+     * 是否可用
+     * @return
+     */
     boolean isValid();
 
+    /**
+     * 验证session是否可用
+     * @throws InvalidSessionException
+     */
     void validate() throws InvalidSessionException;
 }
